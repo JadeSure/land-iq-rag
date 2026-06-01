@@ -1,0 +1,2 @@
+# Placeholder so `cdk synth` finds the Lambda asset directory.
+# The real bundle is produced by ../build_lambda.sh before `cdk deploy`.

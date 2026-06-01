@@ -1,0 +1,8 @@
+{
+  "app": "../.venv/bin/python app.py",
+  "watch": { "exclude": ["build/**", "cdk.out/**"] },
+  "context": {
+    "@aws-cdk/core:newStyleStackSynthesis": true,
+    "@aws-cdk/aws-lambda:recognizeLayerVersion": true
+  }
+}

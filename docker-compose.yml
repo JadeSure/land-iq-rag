@@ -1,0 +1,22 @@
+# Local Postgres with pgvector preinstalled.
+# Port 5433 on the host to avoid clashing with a system Postgres on 5432.
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: landiq-rag-db
+    environment:
+      POSTGRES_USER: landiq
+      POSTGRES_PASSWORD: landiq
+      POSTGRES_DB: landiq_rag
+    ports:
+      - "5433:5432"
+    volumes:
+      - landiq_rag_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U landiq -d landiq_rag"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  landiq_rag_pgdata:
