@@ -9,6 +9,7 @@ default for substantive retrieval.
 
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import math
 import re
@@ -95,6 +96,98 @@ class SelfHostedEmbeddingProvider:
         resp = await self._client.post("/embed", json={"inputs": texts})
         resp.raise_for_status()
         return EmbeddingResult(vectors=resp.json())
+
+    async def embed(self, texts: list[str]) -> EmbeddingResult:
+        return await self._call(texts)
+
+    async def embed_query(self, text: str) -> EmbeddingResult:
+        return await self._call([text])
+
+
+class HuggingFaceEmbeddingProvider:
+    """Local sentence-transformers provider. model_id 'hf:<hf-repo>'.
+
+    Downloads model weights on first use (~133 MB for bge-small-en-v1.5) and
+    caches them in ~/.cache/huggingface. No API key required; runs fully offline
+    after the initial download. Recommended model for local dev/testing:
+    BAAI/bge-small-en-v1.5 (MIT, 384-dim, MTEB retrieval 51.68).
+    """
+
+    def __init__(self, repo: str) -> None:
+        from sentence_transformers import SentenceTransformer  # type: ignore[import-untyped]
+
+        self._repo = repo
+        self._model = SentenceTransformer(repo)
+        self._dim: int = self._model.get_sentence_embedding_dimension()
+
+    @property
+    def model_id(self) -> str:
+        return f"hf:{self._repo}"
+
+    @property
+    def dimension(self) -> int:
+        return self._dim
+
+    def _encode(self, texts: list[str]) -> list[list[float]]:
+        vecs = self._model.encode(texts, normalize_embeddings=True, show_progress_bar=False)
+        return [v.tolist() for v in vecs]
+
+    async def embed(self, texts: list[str]) -> EmbeddingResult:
+        vectors = await asyncio.to_thread(self._encode, texts)
+        return EmbeddingResult(vectors=vectors)
+
+    async def embed_query(self, text: str) -> EmbeddingResult:
+        vectors = await asyncio.to_thread(self._encode, [text])
+        return EmbeddingResult(vectors=vectors)
+
+
+class GeminiEmbeddingProvider:
+    """Google Gemini embedding provider. model_id 'gemini:<model-name>'.
+
+    Requires RAG_GEMINI_API_KEY. Recommended model: gemini-embedding-001
+    (MTEB 68.32, $0.15/1M tokens, 2048-token context, 128–3072-dim output).
+    Dimension defaults to 1536 to match OpenAI drop-in use; override via dim.
+    """
+
+    _RATES: dict[str, float] = {
+        "gemini-embedding-001": 0.15,
+        "text-embedding-004": 0.025,
+    }
+
+    def __init__(self, model_name: str, api_key: str, dim: int = 1536) -> None:
+        if not api_key:
+            raise ValueError(f"RAG_GEMINI_API_KEY required for gemini:{model_name}")
+        import google.generativeai as genai  # type: ignore[import-untyped]
+
+        genai.configure(api_key=api_key)
+        self._name = model_name
+        self._dim = dim
+        self._rate = self._RATES.get(model_name, 0.0)
+        self._genai = genai
+
+    @property
+    def model_id(self) -> str:
+        return f"gemini:{self._name}"
+
+    @property
+    def dimension(self) -> int:
+        return self._dim
+
+    async def _call(self, texts: list[str]) -> EmbeddingResult:
+        def _sync() -> list[list[float]]:
+            result = self._genai.embed_content(
+                model=f"models/{self._name}",
+                content=texts,
+                output_dimensionality=self._dim,
+            )
+            return result["embedding"] if isinstance(texts, str) else [e for e in result["embedding"]]
+
+        vectors = await asyncio.to_thread(_sync)
+        if isinstance(vectors[0], float):
+            vectors = [vectors]
+        tokens = sum(len(t.split()) for t in texts)
+        cost = tokens / 1_000_000 * self._rate
+        return EmbeddingResult(vectors=vectors, tokens=tokens, cost_usd=cost)
 
     async def embed(self, texts: list[str]) -> EmbeddingResult:
         return await self._call(texts)

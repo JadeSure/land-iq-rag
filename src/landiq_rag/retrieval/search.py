@@ -11,7 +11,7 @@ import time
 
 from ..context import AppContext
 from ..store.db import get_model_table
-from ..store.embeddings import ann_search
+from ..store.embeddings import hybrid_search
 
 
 async def search(ctx: AppContext, *, address_id: str, query: str, k: int) -> dict:
@@ -31,11 +31,12 @@ async def search(ctx: AppContext, *, address_id: str, query: str, k: int) -> dic
         embedded = await provider.embed_query(query)
         cost = embedded.cost_usd
         async with ctx.pool.connection() as conn:
-            results, examined = await ann_search(
+            results, examined = await hybrid_search(
                 conn,
                 table=table,
                 address_id=address_id,
                 query_vector=embedded.vectors[0],
+                query_text=query,
                 k=k,
             )
 

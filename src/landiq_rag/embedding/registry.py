@@ -11,6 +11,8 @@ from ..config import Settings
 from ..ports import EmbeddingProvider
 from .providers import (
     FeatureHashEmbeddingProvider,
+    GeminiEmbeddingProvider,
+    HuggingFaceEmbeddingProvider,
     OpenAIEmbeddingProvider,
     SelfHostedEmbeddingProvider,
 )
@@ -19,7 +21,6 @@ from .providers import (
 def make_provider(model_id: str, settings: Settings) -> EmbeddingProvider:
     provider, _, rest = model_id.partition(":")
     if provider == "hash":
-        # rest like 'feature-256'
         dim = int(rest.rsplit("-", 1)[-1]) if "-" in rest else 256
         return FeatureHashEmbeddingProvider(dim=dim)
     if provider == "openai":
@@ -28,4 +29,8 @@ def make_provider(model_id: str, settings: Settings) -> EmbeddingProvider:
         return SelfHostedEmbeddingProvider(
             rest, base_url=settings.selfhosted_url, dim=settings.selfhosted_dim
         )
+    if provider == "hf":
+        return HuggingFaceEmbeddingProvider(rest)
+    if provider == "gemini":
+        return GeminiEmbeddingProvider(rest, api_key=settings.gemini_api_key)
     raise ValueError(f"Unknown embedding provider in model_id: {model_id!r}")

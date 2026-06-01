@@ -15,7 +15,7 @@ from ..ports import ClaimedJob
 from ..store import documents, embeddings, tasks
 from ..store.db import ensure_embedding_table, set_config
 from .chunk import chunk_segments
-from .extract import extract_segments
+from .extract import extract_segments_with_fallback
 
 _EMBED_BATCH = 128
 
@@ -52,7 +52,11 @@ async def run_ingest_job(ctx: AppContext, job: ClaimedJob) -> None:
     await tasks.set_state(pool, job.task_id, "extracting")
     try:
         data = await ctx.storage.get(storage_ref)
-        segments = extract_segments(data, content_type)
+        segments = await extract_segments_with_fallback(
+            data, content_type,
+            anthropic_api_key=ctx.settings.anthropic_api_key,
+            threshold=ctx.settings.pdf_fallback_threshold,
+        )
     except Exception as exc:  # noqa: BLE001
         raise PipelineError("extract", exc) from exc
 

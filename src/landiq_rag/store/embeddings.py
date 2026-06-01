@@ -1,8 +1,12 @@
-"""Per-model embedding storage and the address-scoped ANN query.
+"""Per-model embedding storage and address-scoped hybrid search.
 
-Every retrieval goes through ann_search, which forces the mandatory address
-filter (isolation is a correctness property, PRD 8.1) and targets exactly one
-model's table (so a single ranking can never mix models, F14).
+Every retrieval goes through hybrid_search, which combines:
+  - ANN vector search (pgvector cosine distance)
+  - Full-text BM25 search (Postgres tsvector / GIN index)
+  - Reciprocal Rank Fusion (RRF) to merge the two rankings
+
+The mandatory address filter (isolation, PRD 8.1) and single-model table
+selection (F14) are enforced inside this function — no caller can bypass them.
 """
 
 from __future__ import annotations
@@ -25,12 +29,6 @@ async def insert_embeddings(
     rows: list[tuple[str, list[float]]],
     on_conflict: str = "update",
 ) -> int:
-    """Insert (chunk_id, vector) rows into a per-model table.
-
-    on_conflict='update' overwrites (re-ingest); 'nothing' is idempotent (rebuild
-    resume). Vectors are sent as literals with an explicit ::vector cast so this
-    works without a numpy dependency.
-    """
     if not rows:
         return 0
     conflict = (
@@ -53,7 +51,6 @@ async def insert_embeddings(
 async def count_missing_for_address(
     conn: psycopg.AsyncConnection, *, table: str, address_id: str
 ) -> int:
-    """Live chunks for an address that lack a vector in this model's table."""
     row = await (
         await conn.execute(
             f"""
@@ -68,31 +65,81 @@ async def count_missing_for_address(
     return row[0]
 
 
-async def ann_search(
+async def hybrid_search(
     conn: psycopg.AsyncConnection,
     *,
     table: str,
     address_id: str,
     query_vector: list[float],
+    query_text: str,
     k: int,
+    rrf_k: int = 60,
 ) -> tuple[list[dict], int]:
-    """Return (ranked rows with provenance, candidates_examined) for one address."""
+    """Hybrid search: vector ANN + BM25 full-text, fused with RRF.
+
+    rrf_k (default 60) is the RRF constant — higher values reduce the impact
+    of rank differences between the two lists. 60 is the standard default.
+
+    Returns (ranked rows with provenance, total candidates examined).
+    Falls back gracefully to pure vector search when the query produces no
+    FTS matches (e.g. very short or stop-word-only queries).
+    """
     cur = conn.cursor(row_factory=dict_row)
     qv = _vec_literal(query_vector)
+    rrf_limit = k * 4  # fetch more candidates before fusion
+
     await cur.execute(
         f"""
-        SELECT e.chunk_id, c.text, c.document_id, d.original_name, d.storage_ref,
-               c.page_number, c.paragraph_index, c.ordinal, e.model_id,
-               1 - (e.embedding <=> %(qv)s::vector) AS cosine_similarity
-          FROM {table} e
-          JOIN chunk    c ON c.chunk_id   = e.chunk_id
-          JOIN document d ON d.document_id = c.document_id
-         WHERE e.address_id = %(addr)s
-           AND c.doc_version = d.live_version
-         ORDER BY e.embedding <=> %(qv)s::vector
-         LIMIT %(k)s
+        WITH
+        -- ── Vector search ───────────────────────────────────────────────────
+        vec AS (
+            SELECT e.chunk_id,
+                   ROW_NUMBER() OVER (ORDER BY e.embedding <=> %(qv)s::vector) AS rank
+            FROM {table} e
+            JOIN chunk    c ON c.chunk_id   = e.chunk_id
+            JOIN document d ON d.document_id = c.document_id
+            WHERE e.address_id = %(addr)s
+              AND c.doc_version = d.live_version
+            ORDER BY e.embedding <=> %(qv)s::vector
+            LIMIT %(rrf_limit)s
+        ),
+        -- ── Full-text (BM25) search ─────────────────────────────────────────
+        fts AS (
+            SELECT c.chunk_id,
+                   ROW_NUMBER() OVER (
+                       ORDER BY ts_rank_cd(c.fts, plainto_tsquery('english', %(qt)s)) DESC
+                   ) AS rank
+            FROM chunk    c
+            JOIN document d ON d.document_id = c.document_id
+            WHERE c.address_id = %(addr)s
+              AND c.doc_version = d.live_version
+              AND c.fts @@ plainto_tsquery('english', %(qt)s)
+            ORDER BY ts_rank_cd(c.fts, plainto_tsquery('english', %(qt)s)) DESC
+            LIMIT %(rrf_limit)s
+        ),
+        -- ── RRF fusion ──────────────────────────────────────────────────────
+        rrf AS (
+            SELECT
+                COALESCE(vec.chunk_id, fts.chunk_id) AS chunk_id,
+                COALESCE(1.0 / (vec.rank + %(rrf_k)s), 0)
+                + COALESCE(1.0 / (fts.rank + %(rrf_k)s), 0) AS score
+            FROM vec
+            FULL OUTER JOIN fts ON vec.chunk_id = fts.chunk_id
+        )
+        -- ── Fetch full rows for top-k winners ───────────────────────────────
+        SELECT
+            c.chunk_id, c.text, c.document_id, d.original_name, d.storage_ref,
+            c.page_number, c.paragraph_index, c.ordinal, e.model_id,
+            rrf.score AS cosine_similarity
+        FROM rrf
+        JOIN chunk    c ON c.chunk_id    = rrf.chunk_id
+        JOIN document d ON d.document_id = c.document_id
+        JOIN {table}  e ON e.chunk_id    = rrf.chunk_id
+        ORDER BY rrf.score DESC
+        LIMIT %(k)s
         """,
-        {"qv": qv, "addr": address_id, "k": k},
+        {"qv": qv, "addr": address_id, "qt": query_text,
+         "k": k, "rrf_limit": rrf_limit, "rrf_k": rrf_k},
     )
     results = await cur.fetchall()
 
@@ -101,4 +148,26 @@ async def ann_search(
             f"SELECT count(*) FROM {table} WHERE address_id = %s", (address_id,)
         )
     ).fetchone()
+
     return results, examined[0]
+
+
+# Keep for backward compatibility (used by tests that call ann_search directly).
+async def ann_search(
+    conn: psycopg.AsyncConnection,
+    *,
+    table: str,
+    address_id: str,
+    query_vector: list[float],
+    k: int,
+) -> tuple[list[dict], int]:
+    """Pure vector search (no FTS). Delegates to hybrid_search with empty text
+    so callers that don't have query_text still work."""
+    return await hybrid_search(
+        conn,
+        table=table,
+        address_id=address_id,
+        query_vector=query_vector,
+        query_text="",
+        k=k,
+    )

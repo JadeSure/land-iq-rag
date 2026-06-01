@@ -49,6 +49,67 @@ which triggers a rebuild).
 
 Interactive docs at `http://localhost:8099/docs` when running.
 
+## PDF extraction
+
+Documents go through a two-stage extraction pipeline:
+
+1. **pdfplumber** (primary, MIT) — geometry-based extraction. Handles regular
+   text and structured tables. Tables are extracted separately as pipe-separated
+   segments to preserve column relationships. Flowchart boxes and decorative
+   frames are filtered out by a ≥2 row × ≥2 column heuristic.
+
+2. **Claude API fallback** (optional) — if the pdfplumber result scores below
+   a quality threshold, the PDF is re-sent to Claude vision for extraction.
+   Useful for scanned/image-only PDFs or documents with complex layouts.
+
+Quality is scored 0–1 from three weighted proxies:
+
+| Proxy | Weight | What it detects |
+|---|---|---|
+| Page coverage | 50% | Fraction of pages that produced any text |
+| Chars / page | 30% | Very low → image-heavy or failed extraction |
+| Avg word length | 20% | Very short → garbled / encoding issues |
+
+To enable the Claude fallback, add to `.env`:
+
+```bash
+RAG_ANTHROPIC_API_KEY=sk-ant-...
+RAG_PDF_FALLBACK_THRESHOLD=0.4   # lower = more selective, higher = more aggressive
+```
+
+The fallback is off by default (`RAG_ANTHROPIC_API_KEY` unset). When off, the
+pipeline behaves exactly as before. OCR for scanned pages is also available as
+a lighter fallback via `uv sync --extra ocr` (requires system-level `tesseract`
+and `poppler`).
+
+## 数据模型
+
+### chunk 表
+
+文档上传后，经过 extract → chunk 流程，每一段文字存为一行 chunk。embedding 表和查询结果都通过 `chunk_id` 关联回这里。
+
+| 列 | 说明 |
+|---|---|
+| `chunk_id` | 唯一 ID（UUID），embedding 表通过它关联回原始文本 |
+| `document_id` | 属于哪个文档；删除文档时所有关联 chunk 级联删除 |
+| `address_id` | 属于哪个地址；查询时强制过滤，防止跨地址数据泄漏 |
+| `doc_version` | 第几次上传产生的 chunk；文档更新时新旧版本并存，embedding 完成后原子切换 `live_version` 指针，旧版本删除 |
+| `text` | 原始文本内容，embedding 从这里生成向量，查询命中后返回给用户 |
+| `page_number` | 来自第几页（pdfplumber 提取时记录） |
+| `paragraph_index` | 该页第几个段落（从 0 开始） |
+| `ordinal` | 全文第几个 chunk（从 0 开始），决定 embed 处理顺序 |
+| `char_start/end` | 在全文拼接字符串里的偏移量，可精确定位到 PDF 原文位置 |
+
+embedding 单独存在 `embedding_<model_slug>` 表里（每个模型一张表），通过 `chunk_id` join 回 chunk 拿文本和出处。
+
+```
+查询命中某个向量
+    │
+    └── chunk_id → chunk 表 → text（返回内容）
+                            → page_number / ordinal（返回出处）
+                            → document_id → document 表 → original_name / storage_ref
+```
+
 ## Tests
 
 ```bash
@@ -101,8 +162,8 @@ AWS-specific code: `src/landiq_rag/aws/` (`lambda_api`, `lambda_worker`,
 ```
 src/landiq_rag/
   api/         FastAPI routes + DTOs (the Agent/Portal contract)
-  ingest/      extract (pdfplumber) · chunk (token-aware) · pipeline · worker
-  embedding/   providers (hash, OpenAI) + registry
+  ingest/      extract (pdfplumber + Claude fallback) · chunk (token-aware) · pipeline · worker
+  embedding/   providers (hash, OpenAI, self-hosted) + registry
   store/       db (pool, migrations, per-model tables) · documents · embeddings · tasks · files
   retrieval/   address-scoped ANN search
 migrations/    numbered SQL (core schema)

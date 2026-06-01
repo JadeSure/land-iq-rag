@@ -35,6 +35,12 @@ class Settings(BaseSettings):
     # Embedding (seeds rag_config; DB is authoritative at runtime).
     active_embedding_model: str = "hash:feature-256"
     openai_api_key: str = ""
+    gemini_api_key: str = ""
+
+    # PDF extraction: Claude API fallback for low-quality pdfplumber results.
+    # Set anthropic_api_key to enable; leave empty to disable the fallback.
+    anthropic_api_key: str = ""
+    pdf_fallback_threshold: float = 0.4  # quality score 0–1 below which Claude is used
 
     # Self-hosted embedding server (the "own pipeline" path, e.g. TEI).
     selfhosted_url: str = ""
