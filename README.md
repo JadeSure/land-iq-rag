@@ -51,36 +51,10 @@ Interactive docs at `http://localhost:8099/docs` when running.
 
 ## PDF extraction
 
-Documents go through a two-stage extraction pipeline:
-
-1. **pdfplumber** (primary, MIT) — geometry-based extraction. Handles regular
-   text and structured tables. Tables are extracted separately as pipe-separated
-   segments to preserve column relationships. Flowchart boxes and decorative
-   frames are filtered out by a ≥2 row × ≥2 column heuristic.
-
-2. **Claude API fallback** (optional) — if the pdfplumber result scores below
-   a quality threshold, the PDF is re-sent to Claude vision for extraction.
-   Useful for scanned/image-only PDFs or documents with complex layouts.
-
-Quality is scored 0–1 from three weighted proxies:
-
-| Proxy | Weight | What it detects |
-|---|---|---|
-| Page coverage | 50% | Fraction of pages that produced any text |
-| Chars / page | 30% | Very low → image-heavy or failed extraction |
-| Avg word length | 20% | Very short → garbled / encoding issues |
-
-To enable the Claude fallback, add to `.env`:
-
-```bash
-RAG_ANTHROPIC_API_KEY=sk-ant-...
-RAG_PDF_FALLBACK_THRESHOLD=0.4   # lower = more selective, higher = more aggressive
-```
-
-The fallback is off by default (`RAG_ANTHROPIC_API_KEY` unset). When off, the
-pipeline behaves exactly as before. OCR for scanned pages is also available as
-a lighter fallback via `uv sync --extra ocr` (requires system-level `tesseract`
-and `poppler`).
+Documents are extracted with **pdfplumber** (MIT, geometry-based). Text and
+structured tables are extracted separately; tables appear as pipe-separated
+segments to preserve column relationships. Flowchart boxes and decorative
+frames are excluded by a ≥2 row × ≥2 column heuristic.
 
 ## 数据模型
 
@@ -162,7 +136,7 @@ AWS-specific code: `src/landiq_rag/aws/` (`lambda_api`, `lambda_worker`,
 ```
 src/landiq_rag/
   api/         FastAPI routes + DTOs (the Agent/Portal contract)
-  ingest/      extract (pdfplumber + Claude fallback) · chunk (token-aware) · pipeline · worker
+  ingest/      extract (pdfplumber) · chunk (token-aware) · pipeline · worker
   embedding/   providers (hash, OpenAI, self-hosted) + registry
   store/       db (pool, migrations, per-model tables) · documents · embeddings · tasks · files
   retrieval/   address-scoped ANN search

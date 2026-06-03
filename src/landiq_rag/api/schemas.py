@@ -20,6 +20,7 @@ class JobStatus(BaseModel):
     address_id: str
     upload_id: str
     document_id: str | None
+    doc_version: int
     job_type: str
     state: str
     model_id: str
@@ -61,7 +62,7 @@ class Citation(BaseModel):
 
 class QueryResultItem(BaseModel):
     text: str
-    similarity: float
+    score: float  # RRF fusion score (max ≈ 0.033 at default rrf_k=60); not cosine similarity
     citation: Citation
 
 

@@ -20,7 +20,7 @@ async def query_address(address_id: str, body: QueryRequest, request: Request) -
     items = [
         QueryResultItem(
             text=r["text"],
-            similarity=round(float(r["cosine_similarity"]), 6),
+            score=round(float(r["score"]), 6),
             citation=Citation(
                 chunk_id=str(r["chunk_id"]),
                 document_id=str(r["document_id"]),

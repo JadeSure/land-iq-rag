@@ -82,7 +82,7 @@ async def test_idempotency_changed_replaces_no_orphans(client):
     )
     final = await wait_terminal(client, changed.json()["task_id"])
     assert final["state"] == "done"
-    assert final["doc_version"] == 2 if "doc_version" in final else True
+    assert final["doc_version"] == 2
 
     q = (await client.post("/addresses/addr-chg/query", json={"query": "bushfire"})).json()
     assert q["chunks_returned"] >= 1

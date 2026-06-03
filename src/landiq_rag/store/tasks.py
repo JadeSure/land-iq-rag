@@ -185,9 +185,9 @@ async def set_progress(
             """
             UPDATE ingest_job SET
                 chunk_count     = COALESCE(%s, chunk_count),
-                embedding_count = COALESCE(%s, embedding_count),
-                tokens_embedded = COALESCE(%s, tokens_embedded),
-                cost_usd        = COALESCE(%s, cost_usd)
+                embedding_count = embedding_count + COALESCE(%s, 0),
+                tokens_embedded = tokens_embedded + COALESCE(%s, 0),
+                cost_usd        = cost_usd + COALESCE(%s, 0)
             WHERE task_id = %s
             """,
             (chunk_count, embedding_count, tokens, cost_usd, task_id),

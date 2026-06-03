@@ -77,16 +77,21 @@ async def hybrid_search(
 ) -> tuple[list[dict], int]:
     """Hybrid search: vector ANN + BM25 full-text, fused with RRF.
 
-    rrf_k (default 60) is the RRF constant — higher values reduce the impact
-    of rank differences between the two lists. 60 is the standard default.
+    Returns (ranked rows, candidates examined).
 
-    Returns (ranked rows with provenance, total candidates examined).
+    The result field `score` is an RRF fusion score — not cosine similarity.
+    Max value ≈ 1/(1+rrf_k) * 2 ≈ 0.033 at default rrf_k=60. Do not threshold
+    as if it were cosine in [0,1].
+
     Falls back gracefully to pure vector search when the query produces no
     FTS matches (e.g. very short or stop-word-only queries).
+
+    Q2 fix: chunks that match BM25 but have no embedding in the active model's
+    table (e.g. during a rebuild) are included via LEFT JOIN rather than dropped.
     """
     cur = conn.cursor(row_factory=dict_row)
     qv = _vec_literal(query_vector)
-    rrf_limit = k * 4  # fetch more candidates before fusion
+    rrf_limit = k * 4
 
     await cur.execute(
         f"""
@@ -127,14 +132,17 @@ async def hybrid_search(
             FULL OUTER JOIN fts ON vec.chunk_id = fts.chunk_id
         )
         -- ── Fetch full rows for top-k winners ───────────────────────────────
+        -- LEFT JOIN on the embedding table so FTS-only chunks (no embedding yet
+        -- in the active model, e.g. mid-rebuild) are not silently dropped (Q2).
         SELECT
             c.chunk_id, c.text, c.document_id, d.original_name, d.storage_ref,
-            c.page_number, c.paragraph_index, c.ordinal, e.model_id,
-            rrf.score AS cosine_similarity
+            c.page_number, c.paragraph_index, c.ordinal,
+            COALESCE(e.model_id, '') AS model_id,
+            rrf.score
         FROM rrf
         JOIN chunk    c ON c.chunk_id    = rrf.chunk_id
         JOIN document d ON d.document_id = c.document_id
-        JOIN {table}  e ON e.chunk_id    = rrf.chunk_id
+        LEFT JOIN {table}  e ON e.chunk_id    = rrf.chunk_id
         ORDER BY rrf.score DESC
         LIMIT %(k)s
         """,
@@ -143,16 +151,22 @@ async def hybrid_search(
     )
     results = await cur.fetchall()
 
+    # Count only live embeddings for this address (candidates actually indexed).
     examined = await (
         await conn.execute(
-            f"SELECT count(*) FROM {table} WHERE address_id = %s", (address_id,)
+            f"""
+            SELECT count(*) FROM {table} e
+            JOIN chunk    c ON c.chunk_id   = e.chunk_id
+            JOIN document d ON d.document_id = c.document_id
+            WHERE e.address_id = %s AND c.doc_version = d.live_version
+            """,
+            (address_id,),
         )
     ).fetchone()
 
     return results, examined[0]
 
 
-# Keep for backward compatibility (used by tests that call ann_search directly).
 async def ann_search(
     conn: psycopg.AsyncConnection,
     *,
@@ -161,8 +175,7 @@ async def ann_search(
     query_vector: list[float],
     k: int,
 ) -> tuple[list[dict], int]:
-    """Pure vector search (no FTS). Delegates to hybrid_search with empty text
-    so callers that don't have query_text still work."""
+    """Pure vector search (no FTS). Delegates to hybrid_search with empty text."""
     return await hybrid_search(
         conn,
         table=table,

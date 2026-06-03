@@ -60,13 +60,16 @@ async def run_ingest_job(ctx: AppContext, job: ClaimedJob) -> None:
     except Exception as exc:  # noqa: BLE001
         raise PipelineError("extract", exc) from exc
 
-    # Chunk + persist chunks at the new version
+    # Chunk + persist chunks at the new version.
+    # Delete any stale rows for this (document_id, doc_version) first so a
+    # retry after a transient embed failure re-inserts cleanly (I1).
     await tasks.set_state(pool, job.task_id, "chunking")
     try:
         chunks = chunk_segments(
             segments, chunk_tokens=ctx.settings.chunk_tokens, overlap=ctx.settings.chunk_overlap
         )
         async with pool.connection() as conn:
+            await documents.delete_version_chunks(conn, job.document_id, job.doc_version)
             await documents.insert_chunks(
                 conn,
                 document_id=job.document_id,
@@ -78,7 +81,7 @@ async def run_ingest_job(ctx: AppContext, job: ClaimedJob) -> None:
         raise PipelineError("chunking", exc) from exc
     await tasks.set_progress(pool, job.task_id, chunk_count=len(chunks))
 
-    # Embed
+    # Embed — pass per-batch deltas so set_progress accumulates correctly across retries (I4).
     await tasks.set_state(pool, job.task_id, "embedding")
     try:
         provider = ctx.provider_for(job.model_id)
@@ -86,8 +89,6 @@ async def run_ingest_job(ctx: AppContext, job: ClaimedJob) -> None:
             table = await ensure_embedding_table(conn, provider.model_id, provider.dimension)
             items = await documents.live_chunks(conn, job.document_id, job.doc_version)
 
-        embedded = tokens = 0
-        cost = 0.0
         for batch in _batched(items, _EMBED_BATCH):
             result = await provider.embed([text for _, text in batch])
             rows = list(zip([cid for cid, _ in batch], result.vectors))
@@ -101,11 +102,9 @@ async def run_ingest_job(ctx: AppContext, job: ClaimedJob) -> None:
                     rows=rows,
                     on_conflict="update",
                 )
-            embedded += len(rows)
-            tokens += result.tokens
-            cost += result.cost_usd
             await tasks.set_progress(
-                pool, job.task_id, embedding_count=embedded, tokens=tokens, cost_usd=cost
+                pool, job.task_id,
+                embedding_count=len(rows), tokens=result.tokens, cost_usd=result.cost_usd,
             )
     except PipelineError:
         raise
@@ -156,12 +155,9 @@ async def run_rebuild_job(ctx: AppContext, job: ClaimedJob) -> None:
             )
             missing = await cur.fetchall()
 
-        embedded = tokens = 0
-        cost = 0.0
         await tasks.set_progress(pool, job.task_id, chunk_count=len(missing))
         for batch in _batched(missing, _EMBED_BATCH):
             result = await provider.embed([r["text"] for r in batch])
-            # group rows by address_id for the per-row address column
             async with pool.connection() as conn:
                 for (r, vec) in zip(batch, result.vectors):
                     await embeddings.insert_embeddings(
@@ -173,16 +169,50 @@ async def run_rebuild_job(ctx: AppContext, job: ClaimedJob) -> None:
                         rows=[(str(r["chunk_id"]), vec)],
                         on_conflict="nothing",
                     )
-            embedded += len(batch)
-            tokens += result.tokens
-            cost += result.cost_usd
             await tasks.set_progress(
-                pool, job.task_id, embedding_count=embedded, tokens=tokens, cost_usd=cost
+                pool, job.task_id,
+                embedding_count=len(batch), tokens=result.tokens, cost_usd=result.cost_usd,
             )
+
+        # Completeness sweep: catch chunks that were ingested while the rebuild ran (R2).
+        async with pool.connection() as conn:
+            cur = conn.cursor(row_factory=dict_row)
+            await cur.execute(
+                f"""
+                SELECT c.chunk_id, c.address_id, c.text
+                  FROM chunk c
+                  JOIN document d ON d.document_id = c.document_id
+             LEFT JOIN {table} e ON e.chunk_id = c.chunk_id
+                 WHERE {where} AND e.chunk_id IS NULL
+                """,
+                params,
+            )
+            stragglers = await cur.fetchall()
+
+        for batch in _batched(stragglers, _EMBED_BATCH):
+            result = await provider.embed([r["text"] for r in batch])
+            async with pool.connection() as conn:
+                for (r, vec) in zip(batch, result.vectors):
+                    await embeddings.insert_embeddings(
+                        conn,
+                        table=table,
+                        model_id=provider.model_id,
+                        dim=provider.dimension,
+                        address_id=r["address_id"],
+                        rows=[(str(r["chunk_id"]), vec)],
+                        on_conflict="nothing",
+                    )
+            await tasks.set_progress(
+                pool, job.task_id,
+                embedding_count=len(batch), tokens=result.tokens, cost_usd=result.cost_usd,
+            )
+
     except Exception as exc:  # noqa: BLE001
         raise PipelineError("rebuild", exc) from exc
 
-    # Flip the active model pointer once the backfill is complete.
-    async with pool.connection() as conn:
-        await set_config(conn, ACTIVE_MODEL_KEY, provider.model_id)
+    # Flip the active model pointer only for global rebuilds — a scoped rebuild
+    # is a pure backfill and must not change what every other address queries (R1).
+    if scope_all:
+        async with pool.connection() as conn:
+            await set_config(conn, ACTIVE_MODEL_KEY, provider.model_id)
     await tasks.mark_done(pool, job.task_id, state="done")

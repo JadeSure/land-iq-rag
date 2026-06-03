@@ -23,7 +23,7 @@ from .schemas import AddressIngestionStatus, DeleteResponse, IngestAccepted, Job
 router = APIRouter(tags=["ingest"])
 
 _JOB_COLUMNS = (
-    "task_id, address_id, upload_id, document_id, job_type, state, model_id, "
+    "task_id, address_id, upload_id, document_id, doc_version, job_type, state, model_id, "
     "chunk_count, embedding_count, attempts, failed_step, error_type, error_message, cost_usd"
 )
 
@@ -38,6 +38,7 @@ def _job_status(row: dict) -> JobStatus:
         address_id=row["address_id"],
         upload_id=row["upload_id"],
         document_id=str(row["document_id"]) if row["document_id"] else None,
+        doc_version=row["doc_version"],
         job_type=row["job_type"],
         state=str(row["state"]),
         model_id=row["model_id"],

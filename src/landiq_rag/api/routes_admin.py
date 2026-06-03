@@ -30,6 +30,18 @@ def _validate_model(ctx: AppContext, model_id: str) -> None:
         raise HTTPException(status_code=400, detail=f"invalid model_id: {exc}") from exc
 
 
+async def _check_no_active_rebuild(ctx: AppContext) -> None:
+    async with ctx.pool.connection() as conn:
+        row = await (
+            await conn.execute(
+                "SELECT 1 FROM ingest_job WHERE job_type = 'rebuild' "
+                "AND state NOT IN ('done','skipped','failed') LIMIT 1"
+            )
+        ).fetchone()
+    if row is not None:
+        raise HTTPException(status_code=409, detail="a rebuild is already in progress")
+
+
 async def _enqueue_rebuild(ctx: AppContext, *, model_id: str, address_scope: str) -> str:
     spec = IngestJobSpec(
         document_id=None,
@@ -59,6 +71,7 @@ async def set_active_model(body: SetModelRequest, request: Request) -> SetModelR
     """
     ctx = _ctx(request)
     _validate_model(ctx, body.model_id)
+    await _check_no_active_rebuild(ctx)
     task_id = await _enqueue_rebuild(ctx, model_id=body.model_id, address_scope="*")
     return SetModelResponse(
         target_model=body.model_id,
@@ -78,6 +91,7 @@ async def rebuild(body: RebuildRequest, request: Request) -> RebuildResponse:
         active = await get_config(conn, ACTIVE_MODEL_KEY)
     model_id = body.model_id or active or ctx.settings.active_embedding_model
     _validate_model(ctx, model_id)
+    await _check_no_active_rebuild(ctx)
     scope = body.address_id or "*"
     task_id = await _enqueue_rebuild(ctx, model_id=model_id, address_scope=scope)
     return RebuildResponse(rebuild_task_id=task_id, model_id=model_id, address_scope=scope)

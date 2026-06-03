@@ -132,6 +132,16 @@ async def insert_chunks(
     return chunk_ids
 
 
+async def delete_version_chunks(
+    conn: psycopg.AsyncConnection, document_id: str, doc_version: int
+) -> None:
+    """Delete chunks for a specific pending version before re-inserting (makes retry idempotent)."""
+    await conn.execute(
+        "DELETE FROM chunk WHERE document_id = %s AND doc_version = %s",
+        (document_id, doc_version),
+    )
+
+
 async def set_live_version(conn: psycopg.AsyncConnection, document_id: str, version: int) -> None:
     await conn.execute(
         "UPDATE document SET live_version = %s WHERE document_id = %s", (version, document_id)

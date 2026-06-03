@@ -1,62 +1,115 @@
 <mxfile host="65bd71144e">
     <diagram name="Local (Track A)" id="page-local">
-        <mxGraphModel dx="1007" dy="376" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="900" math="0" shadow="0">
+        <mxGraphModel dx="795" dy="289" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="920" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="Ltitle" value="LandIQ RAG — Local (Track A, June 2026 demo)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#232F3E;" parent="1" vertex="1">
-                    <mxGeometry x="60" y="20" width="600" height="30" as="geometry"/>
+                    <mxGeometry x="60" y="18" width="700" height="28" as="geometry"/>
                 </mxCell>
-                <mxCell id="L1" value="Portal&#xa;(upload)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#3a5b8c;fontColor=#ffffff;fontSize=12;fontStyle=1;" parent="1" vertex="1">
-                    <mxGeometry x="100" y="80" width="160" height="50" as="geometry"/>
+                <mxCell id="L_portal" value="Portal&#xa;(upload)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#3a5b8c;fontColor=#ffffff;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="62" width="150" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="L2" value="Agent&#xa;(query, consumer)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#3a5b8c;fontColor=#ffffff;fontSize=12;fontStyle=1;" parent="1" vertex="1">
-                    <mxGeometry x="540" y="80" width="180" height="50" as="geometry"/>
+                <mxCell id="L_agent" value="Agent&#xa;(query / consumer)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#3a5b8c;fontColor=#ffffff;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="890" y="62" width="170" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="L3" value="FastAPI (uvicorn) — single dev process&#xa;&#xa;ingest · status · query · remove · config · rebuild" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#4d7a31;fontColor=#ffffff;fontSize=13;fontStyle=1;" parent="1" vertex="1">
-                    <mxGeometry x="120" y="190" width="600" height="90" as="geometry"/>
+                <mxCell id="L_api" value="FastAPI / uvicorn — single process&#xa;POST /addresses/{id}/documents  ·  POST /addresses/{id}/query  ·  GET /ingestion/{id}  ·  DELETE /documents/{id}  ·  GET-PUT /config/embedding-model  ·  POST /config/rebuild" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#4d7a31;fontColor=#ffffff;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="148" width="1080" height="62" as="geometry"/>
                 </mxCell>
-                <mxCell id="L4" value="Local filesystem&#xa;(raw PDFs)&#xa;LocalFsStorage" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d6b656;strokeColor=#a68a2e;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="1" vertex="1">
-                    <mxGeometry x="110" y="380" width="160" height="100" as="geometry"/>
+                <mxCell id="L_lbl_ingest" value="◀  INGEST PATH" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#888888;fontStyle=3;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="222" width="200" height="16" as="geometry"/>
                 </mxCell>
-                <mxCell id="L5" value="Postgres 16 + pgvector (Docker)&#xa;&#xa;document · chunk · embedding_&lt;model&gt;&#xa;ingest_job · query_log · rag_config" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#d79b00;strokeColor=#a06c00;fontColor=#ffffff;fontSize=12;fontStyle=1;" parent="1" vertex="1">
-                    <mxGeometry x="340" y="370" width="390" height="130" as="geometry"/>
+                <mxCell id="L_lbl_query" value="QUERY PATH  ▶" style="text;html=1;align=right;verticalAlign=middle;fontSize=11;fontColor=#888888;fontStyle=3;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="222" width="200" height="16" as="geometry"/>
                 </mxCell>
-                <mxCell id="L6" value="Worker (asyncio task / subprocess)&#xa;process_job:&#xa;extract → chunk → embed → versioned write → live flip" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d79b00;strokeColor=#a06c00;fontColor=#ffffff;fontSize=12;fontStyle=1;" parent="1" vertex="1">
-                    <mxGeometry x="340" y="590" width="390" height="90" as="geometry"/>
+                <mxCell id="L_divider" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#BBBBBB;strokeWidth=2;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="580" y="222" as="sourcePoint"/>
+                        <mxPoint x="580" y="598" as="targetPoint"/>
+                    </mxGeometry>
                 </mxCell>
-                <mxCell id="L7" value="OpenAI API&#xa;text-embedding-3-small&#xa;(EmbeddingProvider)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#843b38;fontColor=#ffffff;fontSize=12;fontStyle=1;" parent="1" vertex="1">
-                    <mxGeometry x="410" y="740" width="230" height="60" as="geometry"/>
+                <mxCell id="L_fs" value="Local Filesystem&#xa;raw PDFs&#xa;LocalFsStorage" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#d6b656;strokeColor=#a68a2e;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="252" width="150" height="98" as="geometry"/>
                 </mxCell>
-                <mxCell id="eL1" value="POST documents" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;" parent="1" source="L1" target="L3" edge="1">
+                <mxCell id="L_worker" value="Worker  (asyncio.Task · same process)&#xa;① extract — PDF/image read cascade (I2):&#xa;  a · pdfplumber (text + real tables)&#xa;  b · OCR pytesseract + pdf2image (if sparse)&#xa;  c · Anthropic Claude Haiku 4.5 (last resort)&#xa;② chunk     token-aware · tiktoken&#xa;③ embed     via EmbeddingProvider&#xa;④ write      chunks + embeddings at new doc_version&#xa;⑤ flip        live_version (atomic · no partial reads)&#xa;⎯⎯ rebuild ⎯⎯&#xa;backfill missing → sweep stragglers&#xa;→ flip active model pointer (global only)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d79b00;strokeColor=#a06c00;fontColor=#ffffff;fontSize=11;fontStyle=1;align=left;spacingLeft=8;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="244" width="334" height="254" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_embed" value="EmbeddingProvider  (pluggable · RAG_ACTIVE_EMBEDDING_MODEL)&#xa;hash:feature-256     default · fully offline · no API key  ◀ current&#xa;hf:BAAI/bge-*          local HuggingFace · no egress&#xa;openai:text-embedding-3-*   optional · requires RAG_OPENAI_API_KEY" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#843b38;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="70" y="508" width="470" height="82" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_vec" value="① Vector ANN&#xa;pgvector · HNSW index&#xa;cosine distance&#xa;embed query → same EmbeddingProvider&#xa;top k×4 candidates by distance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="608" y="252" width="210" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_bm25" value="② BM25 Full-text&#xa;tsvector · GIN index&#xa;ts_rank_cd · plainto_tsquery&#xa;keyword match on raw text&#xa;top k×4 by term frequency" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="860" y="252" width="210" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_iso" value="⚑  mandatory: WHERE address_id = ?   (cross-address leakage = correctness defect)" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#b85450;fontStyle=3;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="370" width="480" height="18" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_rrf" value="③ RRF Fusion  (FULL OUTER JOIN vec ⟕ fts)&#xa;&#xa;score  =  1 / (rank_vec  + 60)&#xa;           +  1 / (rank_bm25 + 60)&#xa;&#xa;ORDER BY score DESC  →  LIMIT k" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9673a6;strokeColor=#7a4f8a;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="672" y="398" width="340" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_results" value="top-k chunks  ·  score  ·  provenance  (text · page · ordinal · doc)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#4d7a31;fontColor=#ffffff;fontSize=11;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="692" y="540" width="380" height="44" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_pg" value="Postgres 16 + pgvector  (Docker · port 5433)&#xa;&#xa;document   ·   chunk  + fts column (generated tsvector · GIN indexed)   ·   embedding_&lt;model&gt;  (HNSW · one table per model)&#xa;embedding_model (registry)   ·   ingest_job (queue + status · SKIP LOCKED)   ·   query_log   ·   rag_config" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#d79b00;strokeColor=#a06c00;fontColor=#ffffff;fontSize=12;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="608" width="1080" height="148" as="geometry"/>
+                </mxCell>
+                <mxCell id="eL1" value="POST /documents" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;" parent="1" source="L_portal" target="L_api" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eL2" value="POST query" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;" parent="1" source="L2" target="L3" edge="1">
+                <mxCell id="eL2" value="POST /query" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;" parent="1" source="L_agent" target="L_api" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eL3" value="store bytes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="L3" target="L4" edge="1">
+                <mxCell id="eL3" value="store bytes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=0.1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="L_api" target="L_fs" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eL4" value="insert document + ingest_job(pending)&#xa;query: ANN + WHERE address_id" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=0.65;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="L3" target="L5" edge="1">
+                <mxCell id="eL4" value="insert document + ingest_job (pending)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=0.22;exitY=1;exitDx=0;exitDy=0;entryX=0.15;entryY=0;entryDx=0;entryDy=0;" parent="1" source="L_api" target="L_pg" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eL5" value="poll (FOR UPDATE SKIP LOCKED)&#xa;+ write chunks / embeddings" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;startArrow=block;endArrow=block;strokeColor=#d79b00;strokeWidth=2;fontSize=10;" parent="1" source="L6" target="L5" edge="1">
+                <mxCell id="eL5" value="read raw" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;dashed=1;strokeColor=#999999;strokeWidth=2;fontSize=10;" parent="1" source="L_worker" target="L_fs" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eL6" value="embed()" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#b85450;strokeWidth=2;fontSize=10;" parent="1" source="L6" target="L7" edge="1">
+                <mxCell id="eL6" value="claim job (SKIP LOCKED)&#xa;write chunks + embeddings" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;startArrow=block;endArrow=block;strokeColor=#d79b00;strokeWidth=2;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;" parent="1" source="L_worker" target="L_pg" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eL7" value="read raw" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;dashed=1;strokeColor=#999999;strokeWidth=2;fontSize=10;" parent="1" source="L6" target="L4" edge="1">
+                <mxCell id="eL7" value="embed(chunks)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#b85450;strokeWidth=2;fontSize=10;" parent="1" source="L_worker" target="L_embed" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="Lnote" value="Single process. Worker polls the ingest_job table. Only egress is the OpenAI call." style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#666666;fontStyle=2;" parent="1" vertex="1">
-                    <mxGeometry x="760" y="600" width="300" height="60" as="geometry"/>
+                <mxCell id="eL8" value="embed query" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#647687;strokeWidth=2;fontSize=10;exitX=0.65;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="L_api" target="L_vec" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="eL9" value="query text" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#647687;strokeWidth=2;fontSize=10;exitX=0.87;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="L_api" target="L_bm25" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="eL10" value="embedding &lt;=&gt; query_vec" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#647687;strokeWidth=2;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.6;entryY=0;entryDx=0;entryDy=0;" parent="1" source="L_vec" target="L_pg" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="eL11" value="fts @@ plainto_tsquery" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#647687;strokeWidth=2;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.88;entryY=0;entryDx=0;entryDy=0;" parent="1" source="L_bm25" target="L_pg" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="eL12" value="rank list ①" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#9673a6;strokeWidth=2;fontSize=10;exitX=0.6;exitY=1;exitDx=0;exitDy=0;entryX=0.2;entryY=0;entryDx=0;entryDy=0;" parent="1" source="L_vec" target="L_rrf" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="eL13" value="rank list ②" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#9673a6;strokeWidth=2;fontSize=10;exitX=0.4;exitY=1;exitDx=0;exitDy=0;entryX=0.8;entryY=0;entryDx=0;entryDy=0;" parent="1" source="L_bm25" target="L_rrf" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="eL14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#9673a6;strokeWidth=2;" parent="1" source="L_rrf" target="L_results" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="eL15" value="ranked chunks + score" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;dashed=1;strokeColor=#6c8ebf;strokeWidth=2;fontSize=10;" parent="1" source="L_results" target="L_agent" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1100" y="562"/>
+                            <mxPoint x="1100" y="86"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
     <diagram name="AWS (Track B)" id="page-aws">
-        <mxGraphModel dx="2238" dy="647" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1047" dy="494" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1190" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -64,85 +117,142 @@
                     <mxGeometry x="60" y="20" width="900" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="VPC" value="VPC" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=1;container=0;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc;strokeColor=#8C4FFF;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#8C4FFF;dashed=0;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="320" width="1040" height="580" as="geometry"/>
+                    <mxGeometry x="40" y="300" width="1240" height="720" as="geometry"/>
                 </mxCell>
-                <mxCell id="SUBpriv" value="Private subnet" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=1;container=0;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_security_group;strokeColor=#00A4A6;fillColor=#E6F6F7;verticalAlign=top;align=left;spacingLeft=30;fontColor=#00A4A6;dashed=0;" parent="1" vertex="1">
-                    <mxGeometry x="80" y="390" width="640" height="470" as="geometry"/>
+                <mxCell id="SUBpriv" value="Private subnet" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=1;container=0;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_private_subnet;strokeColor=#00A4A6;fillColor=#E6F6F7;verticalAlign=top;align=left;spacingLeft=30;fontColor=#00A4A6;dashed=0;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="380" width="820" height="580" as="geometry"/>
                 </mxCell>
                 <mxCell id="SUBpub" value="Public subnet" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=1;container=0;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_public_subnet;strokeColor=#7AA116;fillColor=#F2F6E8;verticalAlign=top;align=left;spacingLeft=30;fontColor=#7AA116;dashed=0;" parent="1" vertex="1">
-                    <mxGeometry x="760" y="390" width="300" height="470" as="geometry"/>
+                    <mxGeometry x="1000" y="380" width="220" height="580" as="geometry"/>
                 </mxCell>
                 <mxCell id="A1" value="Agent / Portal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#3a5b8c;fontColor=#ffffff;fontSize=12;fontStyle=1;" parent="1" vertex="1">
-                    <mxGeometry x="60" y="70" width="180" height="50" as="geometry"/>
+                    <mxGeometry x="90" y="70" width="170" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="A2" value="API Gateway&#xa;(HTTPS)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#945DF2;gradientDirection=north;fillColor=#5A30B5;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.api_gateway;" parent="1" vertex="1">
-                    <mxGeometry x="100" y="170" width="78" height="78" as="geometry"/>
+                    <mxGeometry x="139" y="170" width="72" height="72" as="geometry"/>
                 </mxCell>
-                <mxCell id="A3" value="SQS&#xa;(ingest / rebuild)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F34482;gradientDirection=north;fillColor=#BC1356;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.simple_queue_service_sqs;" parent="1" vertex="1">
-                    <mxGeometry x="470" y="170" width="78" height="78" as="geometry"/>
+                <mxCell id="A3" value="SQS&#xa;(ingest / rebuild)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F34482;gradientDirection=north;fillColor=#BC1356;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="170" width="72" height="72" as="geometry"/>
                 </mxCell>
-                <mxCell id="A4" value="DLQ&#xa;(poison msgs)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F34482;gradientDirection=north;fillColor=#BC1356;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.simple_queue_service_sqs;" parent="1" vertex="1">
-                    <mxGeometry x="660" y="170" width="78" height="78" as="geometry"/>
+                <mxCell id="A4" value="DLQ&#xa;(poison msgs)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F34482;gradientDirection=north;fillColor=#BC1356;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="170" width="72" height="72" as="geometry"/>
                 </mxCell>
-                <mxCell id="A5" value="API Lambda&#xa;(FastAPI + Mangum)&#xa;upload → S3 + rows → SQS → 202" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
-                    <mxGeometry x="130" y="450" width="78" height="78" as="geometry"/>
+                <mxCell id="A5" value="API Lambda&#xa;(FastAPI + Mangum)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
+                    <mxGeometry x="139" y="450" width="72" height="72" as="geometry"/>
                 </mxCell>
-                <mxCell id="A6" value="Ingest Lambda&#xa;process_job: extract → chunk →&#xa;embed → write → live flip" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
-                    <mxGeometry x="470" y="450" width="78" height="78" as="geometry"/>
+                <mxCell id="A6" value="Ingest Lambda&#xa;extract: pdfplumber → OCR → Claude&#xa;→ chunk → embed → flip" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="450" width="72" height="72" as="geometry"/>
                 </mxCell>
-                <mxCell id="A7" value="EC2 t4g.small&#xa;Postgres 16 + pgvector + pgbouncer&#xa;document · chunk · embedding_* · ingest_job&#xa;SG: 5432 only from Lambda SG" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ec2;" parent="1" vertex="1">
-                    <mxGeometry x="300" y="680" width="78" height="78" as="geometry"/>
+                <mxCell id="A7" value="EC2 t4g.small&#xa;Postgres 16 + pgvector + pgbouncer&#xa;SG: 6432 only from Lambda SG" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ec2;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="720" width="72" height="72" as="geometry"/>
                 </mxCell>
-                <mxCell id="A8" value="NAT instance&#xa;t4g.nano (~$3/mo,&#xa;not NAT gateway)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#945DF2;gradientDirection=north;fillColor=#5A30B5;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.nat_gateway;" parent="1" vertex="1">
-                    <mxGeometry x="820" y="500" width="78" height="78" as="geometry"/>
+                <mxCell id="A8" value="NAT instance&#xa;t4g.nano (not NAT gateway)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#945DF2;gradientDirection=north;fillColor=#5A30B5;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.nat_gateway;" parent="1" vertex="1">
+                    <mxGeometry x="1080" y="450" width="72" height="72" as="geometry"/>
                 </mxCell>
-                <mxCell id="A9" value="S3 (raw docs)&#xa;Gateway endpoint (free)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#60A337;gradientDirection=north;fillColor=#277116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.simple_storage_service;" parent="1" vertex="1">
-                    <mxGeometry x="120" y="930" width="78" height="78" as="geometry"/>
+                <mxCell id="IGW" value="Internet Gateway" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#945DF2;gradientDirection=north;fillColor=#5A30B5;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.internet_gateway;" parent="1" vertex="1">
+                    <mxGeometry x="1080" y="680" width="72" height="72" as="geometry"/>
                 </mxCell>
-                <mxCell id="A10" value="SSM Parameter Store&#xa;(active model, OpenAI key)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F34482;gradientDirection=north;fillColor=#BC1356;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.systems_manager_parameter_store;" parent="1" vertex="1">
-                    <mxGeometry x="470" y="930" width="78" height="78" as="geometry"/>
+                <mxCell id="A9" value="S3 (raw docs)&#xa;Gateway endpoint (free)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#60A337;gradientDirection=north;fillColor=#277116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="1070" width="72" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="A10" value="SSM Parameter Store&#xa;(non-secret config)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;shape=mxgraph.aws3.parameter_store;fillColor=#BC1356;gradientColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="470" y="1070" width="72" height="72" as="geometry"/>
                 </mxCell>
                 <mxCell id="A11" value="CloudWatch&#xa;(logs, cost metrics)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F34482;gradientDirection=north;fillColor=#BC1356;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch;" parent="1" vertex="1">
-                    <mxGeometry x="700" y="930" width="78" height="78" as="geometry"/>
+                    <mxGeometry x="880" y="1070" width="72" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="SM" value="Secrets Manager&#xa;(OpenAI key · DB password)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F54749;gradientDirection=north;fillColor=#C7131F;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.secrets_manager;" parent="1" vertex="1">
+                    <mxGeometry x="660" y="1070" width="72" height="72" as="geometry"/>
                 </mxCell>
                 <mxCell id="ANET" value="Internet → OpenAI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#7a2e2b;fontSize=12;fontStyle=1;" parent="1" vertex="1">
-                    <mxGeometry x="1130" y="520" width="160" height="60" as="geometry"/>
+                    <mxGeometry x="1380" y="600" width="160" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="eA1" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;" parent="1" source="A1" target="A2" edge="1">
+                <mxCell id="Anote" value="AWS (Track B). Delivery layer only differs from Local:&#xa;SQS → Lambda replaces the poll loop; process_job is&#xa;identical. Query = hybrid ANN + BM25 → RRF.&#xa;&#xa;Egress: both Lambdas embed via OpenAI (API = query,&#xa;worker = docs). All private-subnet egress (OpenAI ·&#xa;SQS send · SSM · CloudWatch) traverses the NAT&#xa;instance → Internet Gateway; only S3 uses the free&#xa;S3 gateway endpoint. Add SQS/SSM/Logs interface&#xa;endpoints to cut NAT traffic.&#xa;&#xa;Config in Parameter Store. Secrets (OpenAI key,&#xa;DB password) in Secrets Manager; both read by the&#xa;Lambdas, EC2 reads only the DB password.&#xa;CloudWatch collects Lambda logs. Worker reads PDFs from S3, extracting&#xa;via pdfplumber → OCR (pytesseract) → Claude (sparse).&#xa;Backups: nightly pg_dump → S3 + daily EBS&#xa;snapshots (DLM, keep 7).&#xa;&#xa;Omitted for clarity: Reconciler Lambda (EventBridge,&#xa;15 min) that re-enqueues stuck / undelivered jobs." style="text;html=1;align=left;verticalAlign=top;fontSize=11;fontColor=#555555;fontStyle=0;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="940" y="44" width="380" height="345" as="geometry"/>
+                </mxCell>
+                <mxCell id="e0" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A1" target="A2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eA2" value="invoke" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A2" target="A5" edge="1">
+                <mxCell id="e1" value="invoke (control plane)&#xa;Lambda service API · not VPC traffic" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A2" target="A5" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eA3" value="put bytes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A5" target="A9" edge="1">
+                <mxCell id="e2" value="put bytes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.3;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A5" target="A9" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="175" y="1030"/>
+                            <mxPoint x="221" y="1030"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e3" value="insert doc + ingest_job · query" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="A5" target="A7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="330" y="486"/>
+                            <mxPoint x="330" y="756"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e4" value="enqueue" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=0.85;exitY=0;exitDx=0;exitDy=0;entryX=0.3;entryY=1;entryDx=0;entryDy=0;" parent="1" source="A5" target="A3" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="200" y="410"/>
+                            <mxPoint x="452" y="410"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e5" value="event source" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=0.7;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A3" target="A6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="480" y="410"/>
+                            <mxPoint x="466" y="410"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e6" value="maxReceiveCount" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BC1356;strokeWidth=2;fontSize=10;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="A3" target="A4" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eA4" value="insert document + ingest_job" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=0.6;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="A5" target="A7" edge="1">
+                <mxCell id="e7" value="6432 via pgbouncer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#D05C17;strokeWidth=2;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A6" target="A7" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eA5" value="enqueue" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" source="A5" target="A3" edge="1">
+                <mxCell id="e8" value="OpenAI embed (doc ingest)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="A6" target="A8" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eA6" value="event source" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#BC1356;strokeWidth=2;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A3" target="A6" edge="1">
+                <mxCell id="e9" value="default route 0.0.0.0/0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A8" target="IGW" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="eA7" value="maxReceiveCount" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;dashed=1;strokeColor=#BC1356;strokeWidth=2;fontSize=10;" parent="1" source="A3" target="A4" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="e10" value="to internet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="IGW" target="ANET" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1280" y="716"/>
+                            <mxPoint x="1280" y="630"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
-                <mxCell id="eA8" value="5432 via pgbouncer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#D05C17;strokeWidth=2;fontSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="A6" target="A7" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="e11" value="nightly pg_dump" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#999999;strokeWidth=2;fontSize=10;dashed=1;exitX=0.2;exitY=1;exitDx=0;exitDy=0;entryX=0.7;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A7" target="A9" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="444" y="1035"/>
+                            <mxPoint x="250" y="1035"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
-                <mxCell id="eA9" value="OpenAI (outbound)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="A6" target="A8" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="e13" value="logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#879196;strokeWidth=2;fontSize=10;dashed=1;exitX=0.85;exitY=1;exitDx=0;exitDy=0;entryX=0.4;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A6" target="A11" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="600" y="522"/>
+                            <mxPoint x="600" y="1050"/>
+                            <mxPoint x="909" y="1050"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
-                <mxCell id="eA10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;" parent="1" source="A8" target="ANET" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="eCfg" value="config" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#879196;strokeWidth=2;fontSize=10;dashed=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A6" target="A10" edge="1">
+                    <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="405" y="486"/><mxPoint x="405" y="1015"/><mxPoint x="488" y="1015"/></Array></mxGeometry>
                 </mxCell>
-                <mxCell id="eA11" value="nightly pg_dump" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;dashed=1;strokeColor=#999999;strokeWidth=2;fontSize=10;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A7" target="A9" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="eSec" value="OpenAI key + DB creds" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#C7131F;strokeWidth=2;fontSize=10;dashed=1;exitX=1;exitY=0.6;exitDx=0;exitDy=0;entryX=0.4;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A6" target="SM" edge="1">
+                    <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="555" y="493"/><mxPoint x="555" y="1020"/><mxPoint x="689" y="1020"/></Array></mxGeometry>
                 </mxCell>
-                <mxCell id="Anote" value="Only the delivery layer differs from Local: SQS → Lambda replaces the poll loop.&#xa;process_job is the same code. EC2 is pgvector only. NAT instance disappears if embeddings move self-hosted." style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#666666;fontStyle=2;" parent="1" vertex="1">
-                    <mxGeometry x="770" y="640" width="320" height="90" as="geometry"/>
+                <mxCell id="eDb" value="db_password" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#C7131F;strokeWidth=2;fontSize=10;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.6;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A7" target="SM" edge="1">
+                    <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="620" y="756"/><mxPoint x="620" y="1035"/><mxPoint x="703" y="1035"/></Array></mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>
