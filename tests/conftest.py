@@ -11,6 +11,9 @@ import os
 os.environ.setdefault("RAG_WORKER_POLL_SECONDS", "0.1")
 os.environ.setdefault("RAG_WORKER_BATCH", "4")
 os.environ.setdefault("RAG_ACTIVE_EMBEDDING_MODEL", "hash:feature-256")
+# Pin storage to the local filesystem so the suite is independent of the dev's
+# .env (which may select the S3/MinIO backend). os.environ wins over .env.
+os.environ.setdefault("RAG_STORAGE_BACKEND", "local")
 
 import httpx  # noqa: E402
 import psycopg  # noqa: E402

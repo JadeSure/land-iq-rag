@@ -8,7 +8,7 @@ venv/
 .ruff_cache/
 
 # Env / secrets
-.env
+# .env
 .env.local
 
 # Local document + file storage

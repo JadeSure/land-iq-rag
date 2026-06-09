@@ -34,6 +34,54 @@ quality set `RAG_OPENAI_API_KEY` and `RAG_ACTIVE_EMBEDDING_MODEL=openai:text-emb
 in `.env` (the model can also be switched at runtime via the admin endpoint,
 which triggers a rebuild).
 
+## Common gotchas
+
+**HuggingFace embedding models need an extra install**
+
+`hf:*` models require `sentence_transformers`, which is not in the default dev deps:
+
+```bash
+uv sync --extra hf
+```
+
+Without this the app fails to start with `ModuleNotFoundError: No module named 'sentence_transformers'`.
+
+**`.env` only seeds the embedding model on first start**
+
+`rag_config` in Postgres is the runtime source of truth. Changing `RAG_ACTIVE_EMBEDDING_MODEL` in `.env` has no effect once the DB has been seeded. To switch models use the API instead:
+
+```bash
+curl -X PUT http://localhost:8099/config/embedding-model \
+  -H "Content-Type: application/json" \
+  -d '{"model_id": "hf:BAAI/bge-base-en-v1.5"}'
+```
+
+This queues a rebuild and flips the active model once it completes.
+
+**Use MinIO or local storage, not both**
+
+Set `RAG_STORAGE_BACKEND=local` (default) for the simplest setup — files land in `./storage/`. To use MinIO (the local S3 stand-in), set:
+
+```bash
+RAG_STORAGE_BACKEND=s3
+RAG_S3_ENDPOINT_URL=http://localhost:9000
+RAG_AWS_ACCESS_KEY_ID=minioadmin
+RAG_AWS_SECRET_ACCESS_KEY=minioadmin
+```
+
+MinIO must be running (`docker compose up -d`) and you can browse its contents at `http://localhost:9001` (minioadmin / minioadmin).
+
+**Uploading files via curl — the `@` prefix**
+
+The `-F` flag needs `@` to read a file from disk; without it curl sends the filename as a plain string:
+
+```bash
+# correct
+curl -X POST http://localhost:8099/addresses/addr-001/documents \
+  -F "file=@/path/to/document.pdf" \
+  -F "upload_id=document.pdf"
+```
+
 ## API
 
 | Method | Path | Purpose |

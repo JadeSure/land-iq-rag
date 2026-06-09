@@ -18,5 +18,36 @@ services:
       timeout: 3s
       retries: 20
 
+  # Fake S3 for local dev (S3-compatible API). Console at http://localhost:9001
+  # (minioadmin/minioadmin); S3 endpoint at http://localhost:9000.
+  minio:
+    image: minio/minio:latest
+    container_name: landiq-rag-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - landiq_rag_miniodata:/data
+
+  # One-shot: wait for MinIO, then create the docs bucket (idempotent).
+  minio-init:
+    image: minio/mc:latest
+    container_name: landiq-rag-minio-init
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set local http://minio:9000 minioadmin minioadmin; do
+        echo 'waiting for minio...'; sleep 1;
+      done;
+      mc mb --ignore-existing local/landiq-rag-docs;
+      echo 'bucket landiq-rag-docs ready';
+      "
+
 volumes:
   landiq_rag_pgdata:
+  landiq_rag_miniodata:

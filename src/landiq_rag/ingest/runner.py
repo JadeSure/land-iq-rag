@@ -26,11 +26,19 @@ def is_retryable(exc: BaseException) -> bool:
         return True
     name = type(exc).__name__
     return name in {
+        # OpenAI / embedding-provider transients.
         "RateLimitError",
         "APITimeoutError",
         "APIConnectionError",
         "InternalServerError",
         "APIError",
+        # botocore S3 transients — connection-level, always transient. These do
+        # not subclass ConnectionError, so they must be matched by name. Note:
+        # ClientError is deliberately excluded (it also covers permanent 404s).
+        "EndpointConnectionError",
+        "ConnectTimeoutError",
+        "ReadTimeoutError",
+        "ConnectionClosedError",
     }
 
 

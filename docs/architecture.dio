@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Local (Track A)" id="page-local">
-        <mxGraphModel dx="873" dy="580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="920" math="0" shadow="0">
+        <mxGraphModel dx="1787" dy="360" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="920" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -109,7 +109,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="AWS (Track B)" id="page-aws">
-        <mxGraphModel dx="675" dy="449" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1300" math="0" shadow="0">
+        <mxGraphModel dx="3063" dy="617" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1300" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -125,7 +125,7 @@
                 <mxCell id="SUBpub" value="Public subnet" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=1;container=0;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_public_subnet;strokeColor=#7AA116;fillColor=#F2F6E8;verticalAlign=top;align=left;spacingLeft=30;fontColor=#7AA116;dashed=0;" parent="1" vertex="1">
                     <mxGeometry x="1050" y="380" width="230" height="700" as="geometry"/>
                 </mxCell>
-                <mxCell id="HG" value="API handlers — one plain Lambda per route  ·  handler(event, context)" style="rounded=1;dashed=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#D05C17;fontColor=#D05C17;fontSize=11;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=4;" vertex="1" parent="1">
+                <mxCell id="HG" value="API handlers — one plain Lambda per route  ·  handler(event, context)" style="rounded=1;dashed=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#D05C17;fontColor=#D05C17;fontSize=11;fontStyle=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=4;" parent="1" vertex="1">
                     <mxGeometry x="90" y="440" width="720" height="175" as="geometry"/>
                 </mxCell>
                 <mxCell id="A1" value="Agent / Portal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#3a5b8c;fontColor=#ffffff;fontSize=12;fontStyle=1;" parent="1" vertex="1">
@@ -140,22 +140,22 @@
                 <mxCell id="A4" value="DLQ&#xa;(poison msgs)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F34482;gradientDirection=north;fillColor=#BC1356;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;" parent="1" vertex="1">
                     <mxGeometry x="950" y="175" width="72" height="72" as="geometry"/>
                 </mxCell>
-                <mxCell id="QL" value="query λ&#xa;POST /query" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" vertex="1" parent="1">
+                <mxCell id="QL" value="query λ&#xa;POST /query" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
                     <mxGeometry x="110" y="470" width="60" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="UL" value="upload λ&#xa;POST /documents" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" vertex="1" parent="1">
+                <mxCell id="UL" value="upload λ&#xa;POST /documents" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
                     <mxGeometry x="230" y="470" width="60" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="SL" value="status λ&#xa;GET /ingestion" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" vertex="1" parent="1">
+                <mxCell id="SL" value="status λ&#xa;GET /ingestion" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
                     <mxGeometry x="350" y="470" width="60" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="DL" value="delete λ&#xa;DEL /documents" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" vertex="1" parent="1">
+                <mxCell id="DL" value="delete λ&#xa;DEL /documents" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
                     <mxGeometry x="470" y="470" width="60" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="CL" value="config λ&#xa;GET·PUT /config" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" vertex="1" parent="1">
+                <mxCell id="CL" value="config λ&#xa;GET·PUT /config" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
                     <mxGeometry x="590" y="470" width="60" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="RL" value="rebuild λ&#xa;POST /rebuild" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" vertex="1" parent="1">
+                <mxCell id="RL" value="rebuild λ&#xa;POST /rebuild" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
                     <mxGeometry x="710" y="470" width="60" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="A6" value="Ingest worker λ&#xa;SQS-triggered · plain handler&#xa;extract→chunk→embed→flip" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F78E04;gradientDirection=north;fillColor=#D05C17;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="1" vertex="1">
@@ -176,7 +176,7 @@
                 <mxCell id="A10" value="SSM Parameter Store&#xa;(non-secret config)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;shape=mxgraph.aws3.parameter_store;fillColor=#BC1356;gradientColor=none;" parent="1" vertex="1">
                     <mxGeometry x="470" y="1170" width="72" height="72" as="geometry"/>
                 </mxCell>
-                <mxCell id="SM" value="Secrets Manager&#xa;(OpenAI key · DB password)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F54749;gradientDirection=north;fillColor=#C7131F;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.secrets_manager;" vertex="1" parent="1">
+                <mxCell id="SM" value="Secrets Manager&#xa;(OpenAI key · DB password)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F54749;gradientDirection=north;fillColor=#C7131F;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.secrets_manager;" parent="1" vertex="1">
                     <mxGeometry x="710" y="1170" width="72" height="72" as="geometry"/>
                 </mxCell>
                 <mxCell id="A11" value="CloudWatch&#xa;(logs, cost metrics)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=#F34482;gradientDirection=north;fillColor=#BC1356;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch;" parent="1" vertex="1">
@@ -188,10 +188,10 @@
                 <mxCell id="Anote" value="AWS (Track B). API is split per route: one plain&#xa;Lambda(event, context) per endpoint behind API&#xa;Gateway (no FastAPI/Mangum). Ingest worker is&#xa;SQS-triggered. Query = hybrid ANN + BM25 → RRF.&#xa;&#xa;Per-Lambda least privilege:&#xa;• query  → DB read · OpenAI · OpenAI key (secret)&#xa;• upload → S3 write · SQS send · DB write&#xa;• status → DB read&#xa;• delete → DB write (+ S3 delete)&#xa;• config → DB / Parameter Store read-write&#xa;• rebuild → SQS send · DB&#xa;All handlers reach the DB via pgbouncer:6432, read&#xa;config from Parameter Store, and log to CloudWatch.&#xa;&#xa;Egress (OpenAI · SQS send · SSM · CloudWatch) goes&#xa;via the NAT instance → IGW; only S3 uses the free&#xa;gateway endpoint. Worker reads PDFs from S3 and&#xa;extracts: pdfplumber → OCR (pytesseract) → Claude.&#xa;Backups: nightly pg_dump → S3 + daily EBS snapshots." style="text;html=1;align=left;verticalAlign=top;fontSize=11;fontColor=#555555;fontStyle=0;whiteSpace=wrap;" parent="1" vertex="1">
                     <mxGeometry x="1050" y="60" width="350" height="400" as="geometry"/>
                 </mxCell>
-                <mxCell id="g0" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="A1" target="A2">
+                <mxCell id="g0" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A1" target="A2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="g1" value="per-route integration (control plane)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.1;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="A2" target="HG">
+                <mxCell id="g1" value="per-route integration (control plane)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.1;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A2" target="HG" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="175" y="410"/>
@@ -199,7 +199,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g2" value="6432 (all handlers)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#D05C17;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="HG" target="A7">
+                <mxCell id="g2" value="6432 (all handlers)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#D05C17;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HG" target="A7" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="450" y="700"/>
@@ -207,7 +207,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g3" value="put bytes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.4;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="UL" target="A9">
+                <mxCell id="g3" value="put bytes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.4;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="UL" target="A9" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="254" y="1120"/>
@@ -215,7 +215,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g4" value="enqueue (ingest)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BC1356;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.6;exitY=0;exitDx=0;exitDy=0;entryX=0.3;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="UL" target="A3">
+                <mxCell id="g4" value="enqueue (ingest)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BC1356;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.6;exitY=0;exitDx=0;exitDy=0;entryX=0.3;entryY=1;entryDx=0;entryDy=0;" parent="1" source="UL" target="A3" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="266" y="415"/>
@@ -223,7 +223,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g5" value="enqueue (rebuild)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BC1356;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.7;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="RL" target="A3">
+                <mxCell id="g5" value="enqueue (rebuild)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BC1356;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.7;entryY=1;entryDx=0;entryDy=0;" parent="1" source="RL" target="A3" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="740" y="400"/>
@@ -231,7 +231,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g6" value="OpenAI (query embed)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="QL">
+                <mxCell id="g6" value="OpenAI (query embed)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="QL" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="140" y="640"/>
@@ -242,7 +242,7 @@
                         <mxPoint x="1130" y="522" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g7" value="event source" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BC1356;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="A3" target="A6">
+                <mxCell id="g7" value="event source" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BC1356;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A3" target="A6" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="816" y="400"/>
@@ -250,7 +250,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g8" value="6432" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#D05C17;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.8;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="A6" target="A7">
+                <mxCell id="g8" value="6432" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#D05C17;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.8;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A6" target="A7" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="871" y="720"/>
@@ -258,7 +258,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g9" value="OpenAI (doc embed)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="A6" target="A8">
+                <mxCell id="g9" value="OpenAI (doc embed)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="A6" target="A8" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="1026" y="496"/>
@@ -266,10 +266,10 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g10" value="default route 0.0.0.0/0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="A8" target="IGW">
+                <mxCell id="g10" value="default route 0.0.0.0/0" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A8" target="IGW" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="g11" value="to internet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="IGW" target="ANET">
+                <mxCell id="g11" value="to internet" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A30B5;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="IGW" target="ANET" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="1400" y="756"/>
@@ -277,10 +277,10 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g12" value="maxReceiveCount" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BC1356;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="A3" target="A4">
+                <mxCell id="g12" value="maxReceiveCount" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BC1356;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="A3" target="A4" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="g13" value="nightly pg_dump" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#999999;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=0.2;exitY=1;exitDx=0;exitDy=0;entryX=0.7;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="A7" target="A9">
+                <mxCell id="g13" value="nightly pg_dump" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#999999;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=0.2;exitY=1;exitDx=0;exitDy=0;entryX=0.7;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A7" target="A9" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="414" y="1135"/>
@@ -288,7 +288,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g14" value="db_password" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#C7131F;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=0.8;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="A7" target="SM">
+                <mxCell id="g14" value="db_password" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#C7131F;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=0.8;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="A7" target="SM" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="457" y="1140"/>
@@ -296,7 +296,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g15" value="config" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#879196;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=0.35;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="HG" target="A10">
+                <mxCell id="g15" value="config" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#879196;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=0.35;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HG" target="A10" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="342" y="1148"/>
@@ -304,7 +304,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g16" value="secrets" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#C7131F;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=0.6;exitY=1;exitDx=0;exitDy=0;entryX=0.4;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="HG" target="SM">
+                <mxCell id="g16" value="secrets" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#C7131F;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=0.6;exitY=1;exitDx=0;exitDy=0;entryX=0.4;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HG" target="SM" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="522" y="1156"/>
@@ -312,13 +312,60 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="g17" value="logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#879196;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=0.85;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="HG" target="A11">
+                <mxCell id="g17" value="logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#879196;strokeWidth=2;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;exitX=0.85;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HG" target="A11" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="702" y="1162"/>
                             <mxPoint x="986" y="1162"/>
                         </Array>
                     </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="DB Schema (教学版)" id="page-db">
+        <mxGraphModel dx="1072" dy="202" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1160" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="T_title" value="数据库 Schema — 教学版(用真实示例理解)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#232F3E;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="22" width="900" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_intro" value="一个地址(123 Smith St)的数据,在 4 张表里层层展开。&#xa;读法:每个框 = 一张表;框里的几行 = 表里真实的几行数据;箭头上的“指回”说明子表用哪一列认父亲。" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#555555;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="56" width="1080" height="44" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_addr" value="&lt;b&gt;表① address&lt;/b&gt;   (一行 = 一个地址)&#xa;────────────────&#xa;address_id     |  display_name&#xa;123 Smith St  |  123 Smith St&#xa;45 Jones Rd   |  45 Jones Rd&#xa;&#xa;↓ 跟着 123 Smith St 这一行往下看" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#1f2d3d;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
+                    <mxGeometry x="110" y="120" width="400" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_doc" value="&lt;b&gt;表② document&lt;/b&gt;   (一行 = 一份文档)&#xa;────────────────&#xa;doc_id |  address_id(指回①) |  文件名&#xa;doc-1  |  123 Smith St |  feasibility.pdf&#xa;doc-2  |  123 Smith St |  dcp.pdf&#xa;doc-9  |  45 Jones Rd  |  survey.pdf  ← 别的地址" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#1f2d3d;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
+                    <mxGeometry x="110" y="320" width="480" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_chunk" value="&lt;b&gt;表③ chunk&lt;/b&gt;   (一行 = 一段文字 / 纸条)&#xa;────────────────&#xa;chunk_id |  doc_id(指回②) |  text&#xa;c1 |  doc-1 |  前院退界 6 米&#xa;c2 |  doc-1 |  容积率 0.5:1&#xa;c3 |  doc-1 |  开发成本 420 万" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#1f2d3d;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
+                    <mxGeometry x="110" y="520" width="480" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_emb" value="&lt;b&gt;表④ embedding_{model}&lt;/b&gt;   (一行 = 一段的向量)&#xa;每个模型一张这样的表&#xa;────────────────&#xa;chunk_id(指回③) |  embedding(向量)&#xa;c1 → [0.12, -0.5, …]&#xa;c2 → [0.33,  0.1, …]&#xa;c3 → [-0.2,  0.7, …]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#1f2d3d;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
+                    <mxGeometry x="110" y="720" width="480" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_a1" value="1 → N&#xa;一个地址有多份文档&#xa;document.address_id 指回 ①" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="T_addr" target="T_doc" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_a2" value="1 → N&#xa;一份文档切成多段&#xa;chunk.document_id 指回 ②" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="T_doc" target="T_chunk" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_a3" value="1 → 1&#xa;每段算一个向量&#xa;embedding.chunk_id 指回 ③" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="T_chunk" target="T_emb" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_cA" value="&lt;b&gt;【删除级联】&lt;/b&gt; ON DELETE CASCADE&#xa;────────────────&#xa;删掉 address 里 123 Smith St 这一行,数据库&#xa;顺着上面“指回”的箭头自动连锁删:&#xa;address → document → chunk → embedding&#xa;一条命令清空整支;45 Jones Rd 那支毫发无损。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#5b1a1a;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
+                    <mxGeometry x="650" y="120" width="540" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_cB" value="&lt;b&gt;【地址隔离】&lt;/b&gt; 正确性红线&#xa;────────────────&#xa;所有地址的纸条/向量其实混在同一张表里,&#xa;靠 address_id 列区分。查询先用&#xa;WHERE address_id = 当前地址  圈出候选,&#xa;再比向量远近 → 别的地址连参赛资格都没有。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#1a2d5b;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
+                    <mxGeometry x="650" y="300" width="540" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_cC" value="&lt;b&gt;【改了重传 = 新版本】&lt;/b&gt;&#xa;────────────────&#xa;新内容写成新的 doc_version(和旧版并排存),&#xa;全建好后在一个事务里原子翻转&#xa;document.live_version 指针。&#xa;查询只看 live 版 → 绝不会读到改一半的内容。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#1a3d1a;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
+                    <mxGeometry x="650" y="490" width="540" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="T_minor" value="&lt;b&gt;不在主链上的 4 张表&lt;/b&gt;(简述,不画连线)&#xa;────────────────&#xa;• ingest_job        摄取队列 + 进度状态(后台工人按它干活)&#xa;• embedding_model  记录“哪个模型 → 哪张向量表”&#xa;• rag_config        运行时配置(当前用哪个模型、分块参数)&#xa;• query_log         每次查询的日志(延迟、命中数、成本)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#333333;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
+                    <mxGeometry x="650" y="680" width="560" height="200" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

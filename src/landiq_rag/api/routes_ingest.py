@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 
+import structlog
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 from psycopg.rows import dict_row
 
@@ -21,6 +22,7 @@ from ..store.embeddings import count_missing_for_address
 from .schemas import AddressIngestionStatus, DeleteResponse, IngestAccepted, JobStatus
 
 router = APIRouter(tags=["ingest"])
+log = structlog.get_logger()
 
 _JOB_COLUMNS = (
     "task_id, address_id, upload_id, document_id, doc_version, job_type, state, model_id, "
@@ -97,9 +99,18 @@ async def ingest_document(
         )
 
     # New or changed: persist bytes, upsert document, enqueue async ingestion (F13).
-    storage_ref = await ctx.storage.put(
-        address_id=address_id, upload_id=upload_id, data=data, content_type=content_type
-    )
+    # Storage is network I/O under the S3 backend; surface an unavailable backend
+    # as a clean 503 rather than a bare 500, and never create the document row
+    # when its bytes did not land.
+    try:
+        storage_ref = await ctx.storage.put(
+            address_id=address_id, upload_id=upload_id, data=data, content_type=content_type
+        )
+    except Exception as exc:  # noqa: BLE001
+        log.error("storage.put_failed", address_id=address_id, upload_id=upload_id, error=str(exc))
+        raise HTTPException(
+            status_code=503, detail="document storage backend unavailable"
+        ) from exc
     async with ctx.pool.connection() as conn:
         docref = await upsert_document(
             conn,
@@ -134,7 +145,25 @@ async def ingest_document(
 async def remove_document(document_id: str, request: Request) -> DeleteResponse:
     ctx = _ctx(request)
     async with ctx.pool.connection() as conn:
+        row = await (
+            await conn.execute(
+                "SELECT storage_ref FROM document WHERE document_id = %s", (document_id,)
+            )
+        ).fetchone()
         deleted = await delete_document(conn, document_id)
+
+    # Drop the raw bytes too so removal does not leak storage (F11). Best-effort
+    # and after the DB delete: a storage failure must not resurrect the document
+    # (an orphaned object is recoverable; a dangling document row is not).
+    if deleted and row is not None:
+        try:
+            await ctx.storage.delete(row[0])
+        except Exception as exc:  # noqa: BLE001
+            log.warning(
+                "storage.delete_failed", document_id=document_id,
+                storage_ref=row[0], error=str(exc),
+            )
+
     return DeleteResponse(document_id=document_id, deleted=deleted)
 
 

@@ -107,6 +107,26 @@ async def test_removal_makes_chunks_unretrievable(client):
     assert q["chunks_returned"] == 0
 
 
+async def test_removal_deletes_stored_bytes(client):
+    """F11: removal must not leak the raw document in storage (orphaned object)."""
+    from pathlib import Path
+    from urllib.parse import urlparse
+
+    up = await upload(client, "addr-del-bytes", text=NSW, upload_id="u1")
+    final = await wait_terminal(client, up.json()["task_id"])
+    assert final["state"] == "done"
+
+    # Resolve the stored object from the citation's storage_ref (file:// locally).
+    q = (await client.post("/addresses/addr-del-bytes/query", json={"query": "front setback"})).json()
+    storage_ref = q["results"][0]["citation"]["storage_ref"]
+    path = Path(urlparse(storage_ref).path)
+    assert path.exists()  # bytes are present before removal
+
+    d = await client.delete(f"/documents/{up.json()['document_id']}")
+    assert d.status_code == 200 and d.json()["deleted"] is True
+    assert not path.exists()  # bytes are gone after removal — no orphan
+
+
 async def test_model_switch_and_rebuild(client):
     """F8,F9,F14,8.5: switch model -> rebuild -> active flips, index consistent."""
     up = await upload(client, "addr-model", text=NSW)

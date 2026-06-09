@@ -31,6 +31,12 @@ class Settings(BaseSettings):
     storage_backend: Literal["local", "s3"] = "local"
     storage_local_root: str = "./storage"
     s3_bucket: str = ""
+    # S3-compatible endpoint for local dev against a fake S3 (MinIO/LocalStack).
+    # Leave empty for real AWS — boto3 then uses the default endpoint + IAM role.
+    s3_endpoint_url: str = ""
+    aws_region: str = ""
+    aws_access_key_id: str = ""
+    aws_secret_access_key: str = ""
 
     # Embedding (seeds rag_config; DB is authoritative at runtime).
     active_embedding_model: str = "hash:feature-256"

@@ -50,13 +50,37 @@ class S3Storage:
     """AWS backend (Track B). Keys: address=<id>/doc=<upload_id>/original/<name>.
 
     boto3 is synchronous; calls are offloaded to threads to keep the port async.
+
+    ``endpoint_url`` points the client at an S3-compatible store (MinIO/LocalStack)
+    for local dev; leave it ``None`` for real AWS so boto3 uses the default endpoint
+    and the instance/role credential chain. A custom endpoint forces path-style
+    addressing (``host/bucket/key``) since bucket-as-subdomain won't resolve locally.
     """
 
-    def __init__(self, bucket: str) -> None:
+    def __init__(
+        self,
+        bucket: str,
+        *,
+        endpoint_url: str | None = None,
+        region: str | None = None,
+        access_key: str | None = None,
+        secret_key: str | None = None,
+    ) -> None:
         import boto3  # imported lazily so local dev needs no AWS deps at import time
 
         self.bucket = bucket
-        self._s3 = boto3.client("s3")
+        client_kwargs: dict = {}
+        if endpoint_url:
+            from botocore.config import Config
+
+            client_kwargs["endpoint_url"] = endpoint_url
+            client_kwargs["config"] = Config(s3={"addressing_style": "path"})
+        if region:
+            client_kwargs["region_name"] = region
+        if access_key and secret_key:
+            client_kwargs["aws_access_key_id"] = access_key
+            client_kwargs["aws_secret_access_key"] = secret_key
+        self._s3 = boto3.client("s3", **client_kwargs)
 
     def _key(self, address_id: str, upload_id: str) -> str:
         return f"address={_safe_segment(address_id)}/doc={_safe_segment(upload_id)}/original"
@@ -86,5 +110,11 @@ def make_storage(settings: Settings) -> StorageBackend:
     if settings.storage_backend == "s3":
         if not settings.s3_bucket:
             raise ValueError("RAG_S3_BUCKET must be set when RAG_STORAGE_BACKEND=s3")
-        return S3Storage(settings.s3_bucket)
+        return S3Storage(
+            settings.s3_bucket,
+            endpoint_url=settings.s3_endpoint_url or None,
+            region=settings.aws_region or None,
+            access_key=settings.aws_access_key_id or None,
+            secret_key=settings.aws_secret_access_key or None,
+        )
     return LocalFsStorage(settings.storage_local_root)
