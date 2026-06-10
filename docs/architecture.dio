@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Local (Track A)" id="page-local">
-        <mxGraphModel dx="1787" dy="360" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="920" math="0" shadow="0">
+        <mxGraphModel dx="922" dy="210" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="920" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -109,7 +109,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="AWS (Track B)" id="page-aws">
-        <mxGraphModel dx="3063" dy="617" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1300" math="0" shadow="0">
+        <mxGraphModel dx="922" dy="409" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1300" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -323,49 +323,300 @@
             </root>
         </mxGraphModel>
     </diagram>
-    <diagram name="DB Schema (教学版)" id="page-db">
-        <mxGraphModel dx="1072" dy="202" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1160" math="0" shadow="0">
+    <diagram name="ER Diagram" id="page-er">
+        <mxGraphModel dx="3222" dy="409" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2300" pageHeight="1150" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="T_title" value="数据库 Schema — 教学版(用真实示例理解)" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#232F3E;" parent="1" vertex="1">
-                    <mxGeometry x="60" y="22" width="900" height="30" as="geometry"/>
+                <mxCell id="er_title" value="LandIQ RAG — Database ER Diagram" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#232F3E;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="24" width="900" height="28" as="geometry"/>
                 </mxCell>
-                <mxCell id="T_intro" value="一个地址(123 Smith St)的数据,在 4 张表里层层展开。&#xa;读法:每个框 = 一张表;框里的几行 = 表里真实的几行数据;箭头上的“指回”说明子表用哪一列认父亲。" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontColor=#555555;whiteSpace=wrap;" parent="1" vertex="1">
-                    <mxGeometry x="60" y="56" width="1080" height="44" as="geometry"/>
+                <mxCell id="er_sub" value="Core data chain runs down the centre (address → document → chunk → vector). Operational tables sit on the sides. Each row shows  key · name · type · meaning." style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="52" width="1100" height="22" as="geometry"/>
                 </mxCell>
-                <mxCell id="T_addr" value="&lt;b&gt;表① address&lt;/b&gt;   (一行 = 一个地址)&#xa;────────────────&#xa;address_id     |  display_name&#xa;123 Smith St  |  123 Smith St&#xa;45 Jones Rd   |  45 Jones Rd&#xa;&#xa;↓ 跟着 123 Smith St 这一行往下看" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#1f2d3d;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
-                    <mxGeometry x="110" y="120" width="400" height="150" as="geometry"/>
+                <mxCell id="B_addr" value="address" style="swimlane;fontStyle=1;align=center;startSize=26;fontSize=13;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="90" width="470" height="92" as="geometry"/>
                 </mxCell>
-                <mxCell id="T_doc" value="&lt;b&gt;表② document&lt;/b&gt;   (一行 = 一份文档)&#xa;────────────────&#xa;doc_id |  address_id(指回①) |  文件名&#xa;doc-1  |  123 Smith St |  feasibility.pdf&#xa;doc-2  |  123 Smith St |  dcp.pdf&#xa;doc-9  |  45 Jones Rd  |  survey.pdf  ← 别的地址" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#1f2d3d;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
-                    <mxGeometry x="110" y="320" width="480" height="150" as="geometry"/>
+                <mxCell id="B_addr_1" value="&lt;b style=&quot;color:#bf7d00&quot;&gt;PK&lt;/b&gt; &lt;b&gt;address_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;external address id; partition + access key&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_addr" vertex="1">
+                    <mxGeometry y="26" width="470" height="22" as="geometry"/>
                 </mxCell>
-                <mxCell id="T_chunk" value="&lt;b&gt;表③ chunk&lt;/b&gt;   (一行 = 一段文字 / 纸条)&#xa;────────────────&#xa;chunk_id |  doc_id(指回②) |  text&#xa;c1 |  doc-1 |  前院退界 6 米&#xa;c2 |  doc-1 |  容积率 0.5:1&#xa;c3 |  doc-1 |  开发成本 420 万" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#1f2d3d;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
-                    <mxGeometry x="110" y="520" width="480" height="150" as="geometry"/>
+                <mxCell id="B_addr_2" value="&lt;b&gt;display_name&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;human-readable label&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_addr" vertex="1">
+                    <mxGeometry y="48" width="470" height="22" as="geometry"/>
                 </mxCell>
-                <mxCell id="T_emb" value="&lt;b&gt;表④ embedding_{model}&lt;/b&gt;   (一行 = 一段的向量)&#xa;每个模型一张这样的表&#xa;────────────────&#xa;chunk_id(指回③) |  embedding(向量)&#xa;c1 → [0.12, -0.5, …]&#xa;c2 → [0.33,  0.1, …]&#xa;c3 → [-0.2,  0.7, …]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#1f2d3d;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
-                    <mxGeometry x="110" y="720" width="480" height="160" as="geometry"/>
+                <mxCell id="B_addr_3" value="&lt;b&gt;created_at&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TIMESTAMPTZ&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;row created&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_addr" vertex="1">
+                    <mxGeometry y="70" width="470" height="22" as="geometry"/>
                 </mxCell>
-                <mxCell id="T_a1" value="1 → N&#xa;一个地址有多份文档&#xa;document.address_id 指回 ①" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="T_addr" target="T_doc" edge="1">
+                <mxCell id="B_doc" value="document" style="swimlane;fontStyle=1;align=center;startSize=26;fontSize=13;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="240" width="470" height="224" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_doc_1" value="&lt;b style=&quot;color:#bf7d00&quot;&gt;PK&lt;/b&gt; &lt;b&gt;document_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;UUID&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;surrogate id&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_doc" vertex="1">
+                    <mxGeometry y="26" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_doc_2" value="&lt;b style=&quot;color:#2d6fb3&quot;&gt;FK&lt;/b&gt; &lt;b&gt;address_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;owner → address (CASCADE)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_doc" vertex="1">
+                    <mxGeometry y="48" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_doc_3" value="&lt;b&gt;upload_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;caller id; UNIQUE(address_id, upload_id)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_doc" vertex="1">
+                    <mxGeometry y="70" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_doc_4" value="&lt;b&gt;content_type&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;file MIME type&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_doc" vertex="1">
+                    <mxGeometry y="92" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_doc_5" value="&lt;b&gt;content_hash&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;sha256; same hash ⇒ skip re-ingest&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_doc" vertex="1">
+                    <mxGeometry y="114" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_doc_6" value="&lt;b&gt;storage_ref&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;where original bytes live (FS / S3)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_doc" vertex="1">
+                    <mxGeometry y="136" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_doc_7" value="&lt;b&gt;original_name&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;uploaded filename (nullable)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_doc" vertex="1">
+                    <mxGeometry y="158" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_doc_8" value="&lt;b&gt;live_version&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;version queries read; flips atomically (0=none)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_doc" vertex="1">
+                    <mxGeometry y="180" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_doc_9" value="&lt;b&gt;ingest_ts&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TIMESTAMPTZ&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;upload time&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_doc" vertex="1">
+                    <mxGeometry y="202" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk" value="chunk" style="swimlane;fontStyle=1;align=center;startSize=26;fontSize=13;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="560" width="470" height="290" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_1" value="&lt;b style=&quot;color:#bf7d00&quot;&gt;PK&lt;/b&gt; &lt;b&gt;chunk_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;UUID&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;surrogate id&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="26" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_2" value="&lt;b style=&quot;color:#2d6fb3&quot;&gt;FK&lt;/b&gt; &lt;b&gt;document_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;UUID&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;source doc → document (CASCADE)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="48" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_3" value="&lt;b style=&quot;color:#2d6fb3&quot;&gt;FK&lt;/b&gt; &lt;b&gt;address_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;denormalised owner; powers the address filter&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="70" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_4" value="&lt;b&gt;doc_version&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;producing version; only = live_version is queried&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="92" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_5" value="&lt;b&gt;ordinal&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;position in doc; UNIQUE(doc_id, doc_version, ordinal)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="114" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_6" value="&lt;b&gt;page_number&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;source page (provenance)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="136" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_7" value="&lt;b&gt;paragraph_index&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;paragraph on page (provenance)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="158" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_8" value="&lt;b&gt;char_start&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;start offset in extracted text&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="180" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_9" value="&lt;b&gt;char_end&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;end offset&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="202" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_10" value="&lt;b&gt;text&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;the chunk text&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="224" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_11" value="&lt;b&gt;token_count&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;token length&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="246" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_chunk_12" value="&lt;b&gt;fts&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;tsvector&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;generated FTS column (0002); GIN-indexed for BM25&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_chunk" vertex="1">
+                    <mxGeometry y="268" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_emb" value="embedding_{model}" style="swimlane;fontStyle=3;align=center;startSize=26;fontSize=13;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="920" width="470" height="136" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_emb_1" value="&lt;b style=&quot;color:#bf7d00&quot;&gt;PK&lt;/b&gt;&lt;b style=&quot;color:#2d6fb3&quot;&gt;·FK&lt;/b&gt; &lt;b&gt;chunk_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;UUID&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;one row per chunk → chunk (CASCADE)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_emb" vertex="1">
+                    <mxGeometry y="26" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_emb_2" value="&lt;b&gt;address_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;denormalised owner; filtered inside ANN&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_emb" vertex="1">
+                    <mxGeometry y="48" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_emb_3" value="&lt;b&gt;model_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;model that produced this vector&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_emb" vertex="1">
+                    <mxGeometry y="70" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_emb_4" value="&lt;b&gt;dim&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;vector dimension&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_emb" vertex="1">
+                    <mxGeometry y="92" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_emb_5" value="&lt;b&gt;embedding&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;vector(N)&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;semantic vector; HNSW cosine if dim ≤ 2000&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_emb" vertex="1">
+                    <mxGeometry y="114" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_cfg" value="rag_config" style="swimlane;fontStyle=1;align=center;startSize=26;fontSize=13;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="90" width="470" height="92" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_cfg_1" value="&lt;b style=&quot;color:#bf7d00&quot;&gt;PK&lt;/b&gt; &lt;b&gt;key&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;setting name (e.g. active_embedding_model)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_cfg" vertex="1">
+                    <mxGeometry y="26" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_cfg_2" value="&lt;b&gt;value&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;setting value&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_cfg" vertex="1">
+                    <mxGeometry y="48" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_cfg_3" value="&lt;b&gt;updated_at&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TIMESTAMPTZ&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;last change&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_cfg" vertex="1">
+                    <mxGeometry y="70" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_qlog" value="query_log" style="swimlane;fontStyle=1;align=center;startSize=26;fontSize=13;fillColor=#d6ece6;strokeColor=#57a08a;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="230" width="470" height="202" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_qlog_1" value="&lt;b style=&quot;color:#bf7d00&quot;&gt;PK&lt;/b&gt; &lt;b&gt;query_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;UUID&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;surrogate id&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_qlog" vertex="1">
+                    <mxGeometry y="26" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_qlog_2" value="&lt;b&gt;address_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;queried address (no FK — log only)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_qlog" vertex="1">
+                    <mxGeometry y="48" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_qlog_3" value="&lt;b&gt;model_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;model used (soft ref)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_qlog" vertex="1">
+                    <mxGeometry y="70" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_qlog_4" value="&lt;b&gt;latency_ms&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;end-to-end latency&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_qlog" vertex="1">
+                    <mxGeometry y="92" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_qlog_5" value="&lt;b&gt;candidates_examined&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;ANN candidates scanned&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_qlog" vertex="1">
+                    <mxGeometry y="114" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_qlog_6" value="&lt;b&gt;chunks_returned&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;results returned&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_qlog" vertex="1">
+                    <mxGeometry y="136" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_qlog_7" value="&lt;b&gt;cost_usd&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;NUMERIC&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;query cost&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_qlog" vertex="1">
+                    <mxGeometry y="158" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_qlog_8" value="&lt;b&gt;created_at&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TIMESTAMPTZ&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;when queried&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_qlog" vertex="1">
+                    <mxGeometry y="180" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_reg" value="embedding_model  (registry)" style="swimlane;fontStyle=1;align=center;startSize=26;fontSize=13;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="540" width="470" height="114" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_reg_1" value="&lt;b style=&quot;color:#bf7d00&quot;&gt;PK&lt;/b&gt; &lt;b&gt;model_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;model id, e.g. openai:text-embedding-3-small&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_reg" vertex="1">
+                    <mxGeometry y="26" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_reg_2" value="&lt;b&gt;dim&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;vector dimension for this model&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_reg" vertex="1">
+                    <mxGeometry y="48" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_reg_3" value="&lt;b&gt;table_name&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;physical table holding its vectors&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_reg" vertex="1">
+                    <mxGeometry y="70" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_reg_4" value="&lt;b&gt;created_at&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TIMESTAMPTZ&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;when the table was created&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_reg" vertex="1">
+                    <mxGeometry y="92" width="470" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job" value="ingest_job  (local queue + status)" style="swimlane;fontStyle=1;align=center;startSize=26;fontSize=13;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="1180" y="240" width="560" height="532" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_1" value="&lt;b style=&quot;color:#bf7d00&quot;&gt;PK&lt;/b&gt; &lt;b&gt;task_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;UUID&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;job id (returned as 202 task_id)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="26" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_2" value="&lt;b style=&quot;color:#2d6fb3&quot;&gt;FK&lt;/b&gt; &lt;b&gt;document_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;UUID&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;target doc → document; NULL for global rebuild&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="48" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_3" value="&lt;b&gt;address_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;address (no FK; &#39;*&#39; for global rebuild)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="70" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_4" value="&lt;b&gt;upload_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;caller id echoed&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="92" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_5" value="&lt;b&gt;content_hash&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;hash being processed&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="114" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_6" value="&lt;b&gt;model_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;embed with this model (soft → embedding_model)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="136" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_7" value="&lt;b&gt;doc_version&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;version being built&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="158" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_8" value="&lt;b&gt;job_type&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;&#39;ingest&#39; | &#39;rebuild&#39;&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="180" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_9" value="&lt;b&gt;state&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;ingest_state&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;ENUM — see state-machine note&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="202" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_10" value="&lt;b&gt;chunk_count&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;chunks produced&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="224" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_11" value="&lt;b&gt;embedding_count&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;vectors written&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="246" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_12" value="&lt;b&gt;attempts&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;tries so far&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="268" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_13" value="&lt;b&gt;max_attempts&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;INT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;retry budget (default 5)&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="290" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_14" value="&lt;b&gt;failed_step&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;step that failed&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="312" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_15" value="&lt;b&gt;error_type&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;exception class&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="334" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_16" value="&lt;b&gt;error_message&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;failure detail&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="356" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_17" value="&lt;b&gt;tokens_embedded&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;BIGINT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;tokens sent to the model&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="378" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_18" value="&lt;b&gt;cost_usd&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;NUMERIC(12,6)&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;embedding spend&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="400" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_19" value="&lt;b&gt;worker_id&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TEXT&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;claiming worker&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="422" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_20" value="&lt;b&gt;claimed_at&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TIMESTAMPTZ&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;when claimed&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="444" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_21" value="&lt;b&gt;lease_until&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TIMESTAMPTZ&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;SKIP LOCKED lease expiry&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="466" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_22" value="&lt;b&gt;created_at&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TIMESTAMPTZ&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;enqueued&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="488" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="B_job_23" value="&lt;b&gt;finished_at&lt;/b&gt;  &lt;span style=&quot;color:#6b7280&quot;&gt;TIMESTAMPTZ&lt;/span&gt;  &lt;span style=&quot;color:#9aa0a6&quot;&gt;completed / failed time&lt;/span&gt;" style="text;html=1;align=left;spacingLeft=10;fontSize=11;" parent="B_job" vertex="1">
+                    <mxGeometry y="510" width="560" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="e_ad" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=ERmany;startArrow=ERone;strokeColor=#333333;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" source="B_addr" target="B_doc" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="T_a2" value="1 → N&#xa;一份文档切成多段&#xa;chunk.document_id 指回 ②" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="T_doc" target="T_chunk" edge="1">
+                <mxCell id="e_dc" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=ERmany;startArrow=ERone;strokeColor=#333333;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" source="B_doc" target="B_chunk" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="T_a3" value="1 → 1&#xa;每段算一个向量&#xa;embedding.chunk_id 指回 ③" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="T_chunk" target="T_emb" edge="1">
+                <mxCell id="e_ce" value="1 : 1  per model table" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=ERone;startArrow=ERone;strokeColor=#b85450;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" source="B_chunk" target="B_emb" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="T_cA" value="&lt;b&gt;【删除级联】&lt;/b&gt; ON DELETE CASCADE&#xa;────────────────&#xa;删掉 address 里 123 Smith St 这一行,数据库&#xa;顺着上面“指回”的箭头自动连锁删:&#xa;address → document → chunk → embedding&#xa;一条命令清空整支;45 Jones Rd 那支毫发无损。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontColor=#5b1a1a;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
-                    <mxGeometry x="650" y="120" width="540" height="150" as="geometry"/>
+                <mxCell id="e_ac" value="FK · denormalised" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=ERmany;startArrow=ERone;strokeColor=#2d6fb3;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=0;entryY=0.5;" parent="1" source="B_addr" target="B_chunk" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="560" y="136"/>
+                            <mxPoint x="560" y="705"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
-                <mxCell id="T_cB" value="&lt;b&gt;【地址隔离】&lt;/b&gt; 正确性红线&#xa;────────────────&#xa;所有地址的纸条/向量其实混在同一张表里,&#xa;靠 address_id 列区分。查询先用&#xa;WHERE address_id = 当前地址  圈出候选,&#xa;再比向量远近 → 别的地址连参赛资格都没有。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontColor=#1a2d5b;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
-                    <mxGeometry x="650" y="300" width="540" height="160" as="geometry"/>
+                <mxCell id="e_dj" value="1 : N · FK (nullable)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=ERmany;startArrow=ERone;strokeColor=#d79b00;strokeWidth=2;fontSize=11;labelBackgroundColor=#ffffff;exitX=1;exitY=0.3;entryX=0;entryY=0.08;" parent="1" source="B_doc" target="B_job" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="T_cC" value="&lt;b&gt;【改了重传 = 新版本】&lt;/b&gt;&#xa;────────────────&#xa;新内容写成新的 doc_version(和旧版并排存),&#xa;全建好后在一个事务里原子翻转&#xa;document.live_version 指针。&#xa;查询只看 live 版 → 绝不会读到改一半的内容。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#1a3d1a;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
-                    <mxGeometry x="650" y="490" width="540" height="150" as="geometry"/>
+                <mxCell id="e_re" value="registers (table_name)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=open;dashed=1;strokeColor=#9673a6;strokeWidth=1;fontSize=10;labelBackgroundColor=#ffffff;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" parent="1" source="B_reg" target="B_emb" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="555" y="597"/>
+                            <mxPoint x="555" y="988"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
-                <mxCell id="T_minor" value="&lt;b&gt;不在主链上的 4 张表&lt;/b&gt;(简述,不画连线)&#xa;────────────────&#xa;• ingest_job        摄取队列 + 进度状态(后台工人按它干活)&#xa;• embedding_model  记录“哪个模型 → 哪张向量表”&#xa;• rag_config        运行时配置(当前用哪个模型、分块参数)&#xa;• query_log         每次查询的日志(延迟、命中数、成本)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontColor=#333333;fontSize=12;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" parent="1" vertex="1">
-                    <mxGeometry x="650" y="680" width="560" height="200" as="geometry"/>
+                <mxCell id="e_cr" value="active_embedding_model" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=open;dashed=1;strokeColor=#9aa0a6;strokeWidth=1;fontSize=10;labelBackgroundColor=#ffffff;exitX=0;exitY=0.5;entryX=0;entryY=0.5;" parent="1" source="B_cfg" target="B_reg" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="20" y="136"/>
+                            <mxPoint x="20" y="597"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e_qa" value="soft ref (no FK)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=open;dashed=1;strokeColor=#9aa0a6;strokeWidth=1;fontSize=10;labelBackgroundColor=#ffffff;exitX=1;exitY=0.15;entryX=0;entryY=0.75;" parent="1" source="B_qlog" target="B_addr" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="560" y="265"/>
+                            <mxPoint x="560" y="158"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="N_legend" value="Legend&#xa;──────────────────────────────&#xa;PK  primary key      FK  foreign key      PK·FK  both&#xa;Solid line + crow&#39;s foot  =  enforced FK (ON DELETE CASCADE)&#xa;Dashed grey line  =  soft reference (by value, no FK constraint)&#xa;grey italic text  =  plain-language meaning of the column&#xa;──────────────────────────────&#xa;amber   root entity (address)&#xa;blue    document&#xa;green   chunk (text + FTS)&#xa;pink    vector (embedding_{model}, dynamic)&#xa;orange  ingest_job (queue + status)&#xa;purple  embedding_model (registry)&#xa;grey    rag_config (runtime config)&#xa;teal    query_log (observability)" style="text;html=1;align=left;verticalAlign=top;fontSize=11;whiteSpace=wrap;spacingLeft=8;spacingTop=6;fillColor=#fbfbfb;strokeColor=#cccccc;fontColor=#333333;" parent="1" vertex="1">
+                    <mxGeometry x="1800" y="90" width="440" height="300" as="geometry"/>
+                </mxCell>
+                <mxCell id="N_iso" value="Address isolation — correctness red line&#xa;──────────────────────────────&#xa;chunk and every embedding table mix ALL addresses in one&#xa;physical table. Every read MUST carry&#xa;    WHERE address_id = :addr&#xa;hard-coded in store/embeddings.py::hybrid_search.&#xa;Omitting it = cross-address leak = correctness defect." style="text;html=1;align=left;verticalAlign=top;fontSize=11;whiteSpace=wrap;spacingLeft=8;spacingTop=6;fillColor=#fdecea;strokeColor=#b85450;fontColor=#7a2e2b;" parent="1" vertex="1">
+                    <mxGeometry x="1800" y="410" width="440" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="N_ver" value="Atomic version switch (re-ingest)&#xa;──────────────────────────────&#xa;A new upload writes a fresh doc_version beside the old one&#xa;(UNIQUE doc_id, doc_version, ordinal). One transaction flips&#xa;document.live_version and drops the old rows. Queries read&#xa;only doc_version = live_version, so a reader sees all-old or&#xa;all-new content, never a half-built state." style="text;html=1;align=left;verticalAlign=top;fontSize=11;whiteSpace=wrap;spacingLeft=8;spacingTop=6;fillColor=#e8f5e9;strokeColor=#82b366;fontColor=#1a3d1a;" parent="1" vertex="1">
+                    <mxGeometry x="1800" y="600" width="440" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="N_dyn" value="One table per model (F14, dynamic)&#xa;──────────────────────────────&#xa;embedding_{model} is created at runtime by&#xa;store/db.py::ensure_embedding_table — one table per model,&#xa;with a fixed-dimension vector column. Each chunk gets one&#xa;row in EVERY model table that has been built. Only the model&#xa;named in rag_config.active_embedding_model is queried; the&#xa;rest sit idle until you switch. &#39;Never mix models in a&#xa;ranking&#39; is therefore structural, not a runtime filter." style="text;html=1;align=left;verticalAlign=top;fontSize=11;whiteSpace=wrap;spacingLeft=8;spacingTop=6;fillColor=#fff0f0;strokeColor=#b85450;fontColor=#7a2e2b;" parent="1" vertex="1">
+                    <mxGeometry x="1800" y="790" width="440" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="N_state" value="ingest_job.state — ingest_state ENUM&#xa;──────────────────────────────&#xa;pending → extracting → chunking → embedding → done&#xa;                           ↘ skipped (content_hash unchanged)&#xa;On error: attempts &lt; max_attempts ⇒ back to pending; else failed.&#xa;Local queue: rows claimed via SELECT … FOR UPDATE SKIP LOCKED." style="text;html=1;align=left;verticalAlign=top;fontSize=11;whiteSpace=wrap;spacingLeft=8;spacingTop=6;fillColor=#fff8e6;strokeColor=#d79b00;fontColor=#a06c00;" parent="1" vertex="1">
+                    <mxGeometry x="1180" y="800" width="560" height="120" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
