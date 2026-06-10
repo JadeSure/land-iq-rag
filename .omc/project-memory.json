@@ -1,0 +1,182 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1781086435610,
+  "projectRoot": "/Users/shawnwang/repos/JR/landiq-rag",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pyproject.toml"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "fastapi",
+        "version": null,
+        "category": "backend"
+      },
+      {
+        "name": "pytest",
+        "version": null,
+        "category": "testing"
+      }
+    ],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "pytest",
+    "lintCommand": "ruff check",
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "scripts",
+      "src",
+      "tests"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "data": {
+      "path": "data",
+      "purpose": "Data files",
+      "fileCount": 0,
+      "lastAccessed": 1781086435339,
+      "keyFiles": []
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 9,
+      "lastAccessed": 1781086435353,
+      "keyFiles": [
+        "DESIGN-DB-and-Compute.md",
+        "DESIGN-Database.md",
+        "MVP-Scope.md",
+        "PLAN-RAG.md",
+        "PRD-Agent.md"
+      ]
+    },
+    "infra": {
+      "path": "infra",
+      "purpose": null,
+      "fileCount": 7,
+      "lastAccessed": 1781086435355,
+      "keyFiles": [
+        "app.py",
+        "bootstrap_ec2.sh",
+        "build_lambda.sh",
+        "cdk.context.json",
+        "cdk.json"
+      ]
+    },
+    "migrations": {
+      "path": "migrations",
+      "purpose": "Database migrations",
+      "fileCount": 3,
+      "lastAccessed": 1781086435363,
+      "keyFiles": [
+        "0001_init.sql",
+        "0002_fts.sql",
+        "schema.sql"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 1,
+      "lastAccessed": 1781086435399,
+      "keyFiles": [
+        "seed_demo.py"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1781086435403,
+      "keyFiles": []
+    },
+    "storage": {
+      "path": "storage",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1781086435405,
+      "keyFiles": []
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 3,
+      "lastAccessed": 1781086435407,
+      "keyFiles": [
+        "conftest.py",
+        "test_acceptance.py",
+        "test_chunking.py"
+      ]
+    },
+    "infra/build": {
+      "path": "infra/build",
+      "purpose": "Build output",
+      "fileCount": 1,
+      "lastAccessed": 1781086435449,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "docs/architecture.dio",
+      "accessCount": 5,
+      "lastAccessed": 1781091890504,
+      "type": "file"
+    },
+    {
+      "path": "src/landiq_rag/api/routes_ingest.py",
+      "accessCount": 1,
+      "lastAccessed": 1781086638233,
+      "type": "file"
+    },
+    {
+      "path": "src/landiq_rag/retrieval/search.py",
+      "accessCount": 1,
+      "lastAccessed": 1781086638503,
+      "type": "file"
+    },
+    {
+      "path": "src/landiq_rag/ingest/worker.py",
+      "accessCount": 1,
+      "lastAccessed": 1781091687957,
+      "type": "file"
+    },
+    {
+      "path": "src/landiq_rag/ingest/extract.py",
+      "accessCount": 1,
+      "lastAccessed": 1781091688006,
+      "type": "file"
+    },
+    {
+      "path": "src/landiq_rag/ingest/runner.py",
+      "accessCount": 1,
+      "lastAccessed": 1781091692085,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
