@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Local (Track A)" id="page-local">
-        <mxGraphModel dx="961" dy="315" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="920" math="0" shadow="0">
+        <mxGraphModel dx="1032" dy="544" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="920" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -109,7 +109,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="AWS (Track B)" id="page-aws">
-        <mxGraphModel dx="1202" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1300" math="0" shadow="0">
+        <mxGraphModel dx="1032" dy="544" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1300" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -324,7 +324,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="ER Diagram" id="page-er">
-        <mxGraphModel dx="3502" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2300" pageHeight="1150" math="0" shadow="0">
+        <mxGraphModel dx="3502" dy="514" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2300" pageHeight="1150" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -622,7 +622,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="End-to-End Flow" id="page-flow">
-        <mxGraphModel dx="961" dy="418" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+        <mxGraphModel dx="961" dy="461" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -782,7 +782,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="Flowchart — Ingest" id="page-fc-ingest">
-        <mxGraphModel dx="1131" dy="646" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1700" math="0" shadow="0">
+        <mxGraphModel dx="1032" dy="69" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1700" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -966,7 +966,7 @@
         </mxGraphModel>
     </diagram>
     <diagram name="Flowchart — Query" id="page-fc-query">
-        <mxGraphModel dx="961" dy="549" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1200" math="0" shadow="0">
+        <mxGraphModel dx="1373" dy="659" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1200" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -1044,6 +1044,289 @@
                 </mxCell>
                 <mxCell id="eq12" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#82b366;strokeWidth=2;" parent="1" source="q_log" target="q_end" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="Sequence — Ingest &amp; Query" id="page-seq">
+        <mxGraphModel dx="1032" dy="544" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="1700" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="sq_title" value="Sequence Diagrams — Ingest (async) &amp; Query (sync)" style="text;html=1;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;fontColor=#232F3E;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="16" width="900" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="sq_h1" value="① INGEST — POST /addresses/{id}/documents  (returns 202 immediately; worker runs out-of-band)" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#a06c00;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="56" width="1100" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_user" value="User / Portal" style="shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="90" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_api" value="API&#xa;(FastAPI / λ)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="95" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_store" value="Storage&#xa;(LocalFs / S3)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="470" y="95" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_queue" value="Queue&#xa;(SKIP LOCKED / SQS)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="690" y="95" width="140" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_worker" value="Worker" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="930" y="95" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_embed" value="Embedding&#xa;Provider" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="1150" y="95" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="L_db" value="Postgres&#xa;+ pgvector" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#a06c00;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="1360" y="95" width="110" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="LL_user" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#6c8ebf;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="95" y="150" as="sourcePoint"/>
+                        <mxPoint x="95" y="885" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="LL_api" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#82b366;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="135" as="sourcePoint"/>
+                        <mxPoint x="310" y="885" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="LL_store" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#d6b656;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="530" y="135" as="sourcePoint"/>
+                        <mxPoint x="530" y="885" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="LL_queue" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#9673a6;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="760" y="135" as="sourcePoint"/>
+                        <mxPoint x="760" y="885" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="LL_worker" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#d79b00;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="990" y="135" as="sourcePoint"/>
+                        <mxPoint x="990" y="885" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="LL_embed" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#b85450;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1210" y="135" as="sourcePoint"/>
+                        <mxPoint x="1210" y="885" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="LL_db" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#a06c00;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1415" y="135" as="sourcePoint"/>
+                        <mxPoint x="1415" y="885" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m1" value="1: upload PDF (multipart)" style="html=1;endArrow=block;strokeColor=#333;strokeWidth=1.5;fontSize=10;startArrow=none;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="95" y="190" as="sourcePoint"/>
+                        <mxPoint x="310" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m2" value="2: sha256(bytes); same hash? → skipped" style="html=1;endArrow=open;dashed=1;strokeColor=#888;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="225" as="sourcePoint"/>
+                        <mxPoint x="310" y="255" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="420" y="225"/>
+                            <mxPoint x="420" y="255"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m3" value="3: put(bytes)" style="html=1;endArrow=block;strokeColor=#d6b656;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="280" as="sourcePoint"/>
+                        <mxPoint x="530" y="280" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m4" value="4: storage_ref (or 503 on failure)" style="html=1;endArrow=open;dashed=1;strokeColor=#d6b656;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="530" y="300" as="sourcePoint"/>
+                        <mxPoint x="310" y="300" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m5" value="5: insert document + ingest_job(pending)" style="html=1;endArrow=block;strokeColor=#a06c00;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="325" as="sourcePoint"/>
+                        <mxPoint x="1415" y="325" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m6" value="6: enqueue(spec)" style="html=1;endArrow=block;strokeColor=#9673a6;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="370" as="sourcePoint"/>
+                        <mxPoint x="760" y="370" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m7" value="7: 202 {task_id, pending}" style="html=1;endArrow=open;dashed=1;strokeColor=#333;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="415" as="sourcePoint"/>
+                        <mxPoint x="95" y="415" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="seq_async" value="── async / out-of-band ──" style="text;html=1;align=center;fontSize=10;fontColor=#999;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="700" y="450" width="220" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="m8" value="8: claim job (SKIP LOCKED / SQS event)" style="html=1;endArrow=block;strokeColor=#9673a6;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="760" y="490" as="sourcePoint"/>
+                        <mxPoint x="990" y="490" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m9" value="9: state→extracting; get(storage_ref)" style="html=1;endArrow=block;strokeColor=#d6b656;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="990" y="525" as="sourcePoint"/>
+                        <mxPoint x="530" y="525" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m10" value="10: raw bytes" style="html=1;endArrow=open;dashed=1;strokeColor=#d6b656;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="530" y="555" as="sourcePoint"/>
+                        <mxPoint x="990" y="555" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m11" value="11: extract cascade — pdfplumber → OCR → Claude Haiku (self / fallback)" style="html=1;endArrow=block;strokeColor=#d79b00;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="990" y="590" as="sourcePoint"/>
+                        <mxPoint x="990" y="625" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1090" y="590"/>
+                            <mxPoint x="1090" y="625"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m12" value="12: state→chunking; insert chunks @ new doc_version" style="html=1;endArrow=block;strokeColor=#a06c00;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="990" y="660" as="sourcePoint"/>
+                        <mxPoint x="1415" y="660" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m13" value="13: state→embedding; embed(chunks) in batches" style="html=1;endArrow=block;strokeColor=#b85450;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="990" y="695" as="sourcePoint"/>
+                        <mxPoint x="1210" y="695" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m14" value="14: vectors" style="html=1;endArrow=open;dashed=1;strokeColor=#b85450;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1210" y="720" as="sourcePoint"/>
+                        <mxPoint x="990" y="720" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m15" value="15: ensure embedding_{model}; insert embeddings" style="html=1;endArrow=block;strokeColor=#a06c00;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="990" y="755" as="sourcePoint"/>
+                        <mxPoint x="1415" y="755" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m16" value="16: atomic flip live_version; drop old versions; state→done" style="html=1;endArrow=block;strokeColor=#82b366;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="990" y="790" as="sourcePoint"/>
+                        <mxPoint x="1415" y="790" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m17" value="(on error: retryable &amp; attempts&lt;max → state→pending &amp; re-claim; else state→failed)" style="text;html=1;align=left;fontSize=10;fontColor=#b85450;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="700" y="812" width="560" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="m18" value="18: GET /ingestion/{task_id} → poll state (pending…done)" style="html=1;endArrow=block;strokeColor=#333;strokeWidth=1.5;fontSize=10;dashed=1;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="95" y="858" as="sourcePoint"/>
+                        <mxPoint x="1415" y="858" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="sq_h2" value="② QUERY — POST /addresses/{id}/query  (synchronous; hybrid ANN + BM25 → RRF)" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#314354;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="970" width="1100" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="Q_agent" value="Agent / consumer" style="shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="1005" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Q_api" value="API&#xa;(FastAPI / λ)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="1010" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="Q_embed" value="Embedding&#xa;Provider" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="470" y="1010" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="Q_db" value="Postgres + pgvector&#xa;(ANN · BM25 · RRF)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=#314354;fontColor=#fff;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="690" y="1010" width="170" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="QL_agent" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#6c8ebf;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="95" y="1065" as="sourcePoint"/>
+                        <mxPoint x="95" y="1440" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="QL_api" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#82b366;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="1050" as="sourcePoint"/>
+                        <mxPoint x="310" y="1440" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="QL_embed" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#b85450;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="530" y="1050" as="sourcePoint"/>
+                        <mxPoint x="530" y="1440" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="QL_db" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#314354;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="775" y="1050" as="sourcePoint"/>
+                        <mxPoint x="775" y="1440" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="q1" value="1: POST query {text, k}" style="html=1;endArrow=block;strokeColor=#333;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="95" y="1090" as="sourcePoint"/>
+                        <mxPoint x="310" y="1090" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="q2" value="2: resolve active model (rag_config); model table exists?" style="html=1;endArrow=block;strokeColor=#314354;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="1120" as="sourcePoint"/>
+                        <mxPoint x="775" y="1120" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="q3" value="3: (no table → return empty, log, end)" style="text;html=1;align=left;fontSize=10;fontColor=#d6b656;fontStyle=2;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="1135" width="430" height="16" as="geometry"/>
+                </mxCell>
+                <mxCell id="q4" value="4: embed_query(text)" style="html=1;endArrow=block;strokeColor=#b85450;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="1170" as="sourcePoint"/>
+                        <mxPoint x="530" y="1170" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="q5" value="5: query_vector" style="html=1;endArrow=open;dashed=1;strokeColor=#b85450;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="530" y="1195" as="sourcePoint"/>
+                        <mxPoint x="310" y="1195" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="q6" value="6: hybrid_search(WHERE address_id=? · ANN top k×4 + BM25 top k×4 → RRF → LIMIT k)" style="html=1;endArrow=block;strokeColor=#314354;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="1225" as="sourcePoint"/>
+                        <mxPoint x="775" y="1225" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="q7" value="7: ranked rows (chunk · score · examined)" style="html=1;endArrow=open;dashed=1;strokeColor=#314354;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="775" y="1265" as="sourcePoint"/>
+                        <mxPoint x="310" y="1265" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="q8" value="8: INSERT query_log (latency · candidates · returned · cost)" style="html=1;endArrow=block;strokeColor=#314354;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="1295" as="sourcePoint"/>
+                        <mxPoint x="775" y="1295" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="q9" value="9: 200 {top-k chunks · score · provenance (text · page · doc)}" style="html=1;endArrow=open;dashed=1;strokeColor=#333;strokeWidth=1.5;fontSize=10;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="310" y="1325" as="sourcePoint"/>
+                        <mxPoint x="95" y="1325" as="targetPoint"/>
+                    </mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>

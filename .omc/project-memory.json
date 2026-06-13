@@ -143,14 +143,14 @@
   "hotPaths": [
     {
       "path": "docs/architecture.dio",
-      "accessCount": 5,
-      "lastAccessed": 1781091890504,
+      "accessCount": 12,
+      "lastAccessed": 1781095329152,
       "type": "file"
     },
     {
       "path": "src/landiq_rag/api/routes_ingest.py",
-      "accessCount": 1,
-      "lastAccessed": 1781086638233,
+      "accessCount": 2,
+      "lastAccessed": 1781096616580,
       "type": "file"
     },
     {
@@ -175,6 +175,24 @@
       "path": "src/landiq_rag/ingest/runner.py",
       "accessCount": 1,
       "lastAccessed": 1781091692085,
+      "type": "file"
+    },
+    {
+      "path": "src/landiq_rag/store/documents.py",
+      "accessCount": 1,
+      "lastAccessed": 1781098189292,
+      "type": "file"
+    },
+    {
+      "path": "src/landiq_rag/ingest/pipeline.py",
+      "accessCount": 1,
+      "lastAccessed": 1781098307386,
+      "type": "file"
+    },
+    {
+      "path": "src/landiq_rag/store/embeddings.py",
+      "accessCount": 1,
+      "lastAccessed": 1781098523972,
       "type": "file"
     }
   ],
